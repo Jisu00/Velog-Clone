@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import LoginPopup from 'components/LoginPopup';
+import LoginPopup from "components/LoginPopup";
 import styled, { keyframes } from "styled-components";
 import logoIcon from "assets/images/logoIcon.svg";
 import searchIcon from "assets/images/searchIcon.svg";
 import dropDownMenuIcon from "assets/images/dropDownMenuIcon.svg";
-import '../index.css';
+import "../index.css";
 
 /// animation
 
@@ -38,31 +38,33 @@ const PopupWrapper = styled.div`
 
 const HeaderWrapper = styled.header`
   display: flex;
-  align-items: center;  
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 64px;
-  padding: 5px 10px 0px 15px;
+  padding: 0px;
 `;
 
 const LogoIcon = styled.div`
   height: 27px;
   cursor: pointer;
-  margin-right: 5px;
+  margin-right: 15px;
 `;
 
 const LogoTitle = styled.div`
-  font-size: 22px;
-  cursor: pointer;
-  margin-left: 10px;
-  color: #343a40;
-
-  @font-face {
-    font-family: 'Fira Mono';
-    src: url('./assets/Fonts/FiraMono-Medium.ttf');
+  @media (max-width: 1024px) {
+    font-size: 20px;
   }
-
-  font-family: 'Fira Mono';
+  @media (min-width: 1025px){
+    font-size: 24px;
+  }
+  cursor: pointer;
+  color: #343a40;
+  @font-face {
+    font-family: "Fira Mono";
+    src: url("./assets/Fonts/FiraMono-Medium.ttf");
+  }
+  font-family: "Fira Mono";
 `;
 
 const SearchIcon = styled.div`
@@ -71,7 +73,6 @@ const SearchIcon = styled.div`
   border-radius: 25px;
   cursor: pointer;
   margin-right: 15px;
-  
   &:hover {
     background: #f1f1f1;
   }
@@ -87,7 +88,7 @@ const ProfileIcon = styled.img`
 
 const DropDownMenuIcon = styled.img`
   height: 25px;
-  margin-left: 5px;
+  margin-left: 8px;
   cursor: pointer;
   opacity: 0.5;
 `;
@@ -96,10 +97,14 @@ const MenuIconWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-
+  margin-right: -6px;
   &:hover {
-    ${ProfileIcon} {animation: ${setShadow} 0.3s forwards;}
-    ${DropDownMenuIcon} {animation: ${fadeOut} 0.3s forwards;}
+    ${ProfileIcon} {
+      animation: ${setShadow} 0.3s forwards;
+    }
+    ${DropDownMenuIcon} {
+      animation: ${fadeOut} 0.3s forwards;
+    }
   }
 `;
 
@@ -107,35 +112,35 @@ const DropDownMenuWrapper = styled.div`
   position: absolute;
   right: 10px;
   top: 60px;
-  width: 210px;
-  height: 318px;
+  width: 190px;
   padding: 0px;
   z-index: 1;
   box-shadow: 0px 0px 7px 0px lightgray;
 `;
 
-
 const Menu = styled.div`
-  width: 210px;
+  width: 190px;
   cursor: pointer;
   background: white;
   line-height: 53px;
   padding: 0px 15px;
-  font-size: 17.5px;
+  font-size: 16px;
   font-weight: 500;
-
   &:hover {
     background: #f8f9fa;
   }
 `;
 
 const MyVelogMenu = styled(Menu)``;
-const WriteMenu = styled(Menu)``;
+const WriteMenu = styled(Menu)`
+  @media (min-width: 1025px) {
+    display: none;
+  }
+`;
 const SavesMenu = styled(Menu)``;
 const LikedMenu = styled(Menu)``;
 const SettingMenu = styled(Menu)``;
 const LogoutMenu = styled(Menu)``;
-
 
 const MenuWrapper = styled.div`
   display: flex;
@@ -144,20 +149,23 @@ const MenuWrapper = styled.div`
 `;
 
 const Btn = styled.button`
-  padding: 1px 18px;
-  height: 35px;
-  font-size: 1.1em;
+  padding: 1px 16px;
+  height: 32px;
+  font-size: 1em;
   font-weight: bold;
   border-radius: 18px;
   cursor: pointer;
 `;
 
 const WriteBtn = styled(Btn)`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+
   background: white;
   border: 1px solid #343a40;
   color: #343a40;
-  margin-right: 25px;
-
+  margin-right: 20px;
   &:hover {
     animation: ${changeColor} 0.2s forwards;
     color: white;
@@ -165,18 +173,15 @@ const WriteBtn = styled(Btn)`
 `;
 
 const LoginBtn = styled(Btn)`
-  margin-left: 10px;
+  margin-right: 5px;
   float: right;
   color: white;
   background: #343a40;
   border: none;
-
   &:hover {
     animation: ${fadeIn} 0.2s forwards;
   }
 `;
-
-
 
 export default function Header() {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
@@ -184,86 +189,103 @@ export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [mode, setMode] = useState("blog");
 
-  let _title, _logo, _loginBtn, _writeBtn, _menuIcon, _menu = null;
+  let _title,
+    _logo,
+    _loginBtn,
+    _writeBtn,
+    _menuIcon,
+    _menu = null;
 
   const loginPopup = () => {
     setIsLoginPopup(true);
   };
 
   const menuPopup = () => {
-    (isMenuPopup === true) ? setIsMenuPopup(false) : setIsMenuPopup(true);
-  }
+    isMenuPopup === true ? setIsMenuPopup(false) : setIsMenuPopup(true);
+  };
 
   const toggleMode = () => {
-    (mode === "main") ? setMode("blog") : setMode("main");
+    mode === "main" ? setMode("blog") : setMode("main");
     setIsMenuPopup(false);
-  }
+  };
 
   const toggleLogin = () => {
     if (isLogin === true) {
       setIsLogin(false);
       setIsMenuPopup(false);
-    }
-    else if (isLogin === false) {
+    } else if (isLogin === false) {
       setIsLogin(true);
     }
-  }
-
+  };
 
   if (mode === "main") {
     _title = "velog";
     _logo = null;
-  }
-  else if (mode === "blog") {
+  } else if (mode === "blog") {
     _title = "NAME.log";
-    _logo = <LogoIcon onClick={toggleMode}><img src={logoIcon} alt="logo icon" /></LogoIcon>;
+    _logo = (
+      <LogoIcon onClick={toggleMode}>
+        <img src={logoIcon} alt="logo icon" />
+      </LogoIcon>
+    );
   }
-
 
   if (isLogin === true) {
     _loginBtn = null;
     _writeBtn = <WriteBtn>새 글 작성</WriteBtn>;
-    _menuIcon = <MenuIconWrapper onClick={menuPopup}>
-                  <ProfileIcon src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120" alt="profile icon"/>
-                  <DropDownMenuIcon src={dropDownMenuIcon} alt="menu icon"/>
-                </MenuIconWrapper>; 
-  }
-  else if (isLogin === false) {
+    _menuIcon = (
+      <MenuIconWrapper onClick={menuPopup}>
+        <ProfileIcon
+          src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
+          alt="profile icon"
+        />
+        <DropDownMenuIcon src={dropDownMenuIcon} alt="menu icon" />
+      </MenuIconWrapper>
+    );
+  } else if (isLogin === false) {
     _loginBtn = <LoginBtn onClick={loginPopup}>로그인</LoginBtn>;
     _writeBtn = null;
     _menu = null;
   }
 
-
   if (isMenuPopup === true) {
-    _menu = <DropDownMenuWrapper>
-              <MyVelogMenu>내 벨로그</MyVelogMenu>
-              <WriteMenu>새 글 작성</WriteMenu>
-              <SavesMenu>임시 글</SavesMenu>
-              <LikedMenu>읽기 목록</LikedMenu>
-              <SettingMenu>설정</SettingMenu>
-              <LogoutMenu onClick={toggleLogin}>로그아웃</LogoutMenu>
-            </DropDownMenuWrapper>;
-  }
-  else if (isMenuPopup === false) {
+    _menu = (
+      <DropDownMenuWrapper>
+        <MyVelogMenu>내 벨로그</MyVelogMenu>
+        <WriteMenu>새 글 작성</WriteMenu>
+        <SavesMenu>임시 글</SavesMenu>
+        <LikedMenu>읽기 목록</LikedMenu>
+        <SettingMenu>설정</SettingMenu>
+        <LogoutMenu onClick={toggleLogin}>로그아웃</LogoutMenu>
+      </DropDownMenuWrapper>
+    );
+  } else if (isMenuPopup === false) {
     _menu = null;
   }
-  
-	return (
-		<div
-			style={{
-				display: "flex",
+
+  return (
+    <div
+      style={{
+        display: "flex",
         flexDirection: "row",
-        justifyContent: "center"
-			}}
-		>
+        justifyContent: "center",
+      }}
+    >
       <HeaderWrapper>
-        <div class="logo_wrapper" style={{display: "flex", alignItems: "center"}}>
+        <div
+          class="logo_wrapper"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           {_logo}
-          <LogoTitle onClick={toggleMode}>{_title}</LogoTitle> 
+          <LogoTitle onClick={toggleMode}>{_title}</LogoTitle>
         </div>
-        <div class="right_wrapper" style={{display: "flex", alignItems: "center"}}>
-          <SearchIcon onClick={toggleLogin}><img src={searchIcon} alt="search icon"/></SearchIcon>
+        <div
+          class="right_wrapper"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <SearchIcon onClick={toggleLogin}>
+            <img src={searchIcon} alt="search icon" />
+          </SearchIcon>
           {_loginBtn}
           {_writeBtn}
           <MenuWrapper>
@@ -274,9 +296,11 @@ export default function Header() {
       </HeaderWrapper>
 
       <PopupWrapper>
-        <LoginPopup isOpen={isLoginPopup} setIsLoginPopup={setIsLoginPopup}></LoginPopup>
+        <LoginPopup
+          isOpen={isLoginPopup}
+          setIsLoginPopup={setIsLoginPopup}
+        ></LoginPopup>
       </PopupWrapper>
-      
-		</div>
-	);
+    </div>
+  );
 }
