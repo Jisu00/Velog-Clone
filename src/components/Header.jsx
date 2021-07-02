@@ -189,19 +189,12 @@ export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [mode, setMode] = useState("blog");
 
-  let _title,
-    _logo,
-    _loginBtn,
-    _writeBtn,
-    _menuIcon,
-    _menu = null;
-
   const loginPopup = () => {
     setIsLoginPopup(true);
   };
 
   const menuPopup = () => {
-    isMenuPopup === true ? setIsMenuPopup(false) : setIsMenuPopup(true);
+    isMenuPopup ? setIsMenuPopup(false) : setIsMenuPopup(true);
   };
 
   const toggleMode = () => {
@@ -218,51 +211,6 @@ export default function Header() {
     }
   };
 
-  if (mode === "main") {
-    _title = "velog";
-    _logo = null;
-  } else if (mode === "blog") {
-    _title = "NAME.log";
-    _logo = (
-      <LogoIcon onClick={toggleMode}>
-        <img src={logoIcon} alt="logo icon" />
-      </LogoIcon>
-    );
-  }
-
-  if (isLogin === true) {
-    _loginBtn = null;
-    _writeBtn = <WriteBtn>새 글 작성</WriteBtn>;
-    _menuIcon = (
-      <MenuIconWrapper onClick={menuPopup}>
-        <ProfileIcon
-          src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
-          alt="profile icon"
-        />
-        <DropDownMenuIcon src={dropDownMenuIcon} alt="menu icon" />
-      </MenuIconWrapper>
-    );
-  } else if (isLogin === false) {
-    _loginBtn = <LoginBtn onClick={loginPopup}>로그인</LoginBtn>;
-    _writeBtn = null;
-    _menu = null;
-  }
-
-  if (isMenuPopup === true) {
-    _menu = (
-      <DropDownMenuWrapper>
-        <MyVelogMenu>내 벨로그</MyVelogMenu>
-        <WriteMenu>새 글 작성</WriteMenu>
-        <SavesMenu>임시 글</SavesMenu>
-        <LikedMenu>읽기 목록</LikedMenu>
-        <SettingMenu>설정</SettingMenu>
-        <LogoutMenu onClick={toggleLogin}>로그아웃</LogoutMenu>
-      </DropDownMenuWrapper>
-    );
-  } else if (isMenuPopup === false) {
-    _menu = null;
-  }
-
   return (
     <div
       style={{
@@ -276,8 +224,13 @@ export default function Header() {
           class="logo_wrapper"
           style={{ display: "flex", alignItems: "center" }}
         >
-          {_logo}
-          <LogoTitle onClick={toggleMode}>{_title}</LogoTitle>
+          <LogoIcon style={mode === "main" ? {display:'none'}:{display:'block'}}
+            onClick={toggleMode}>
+            <img src={logoIcon} alt="logo icon" />
+          </LogoIcon>
+          <LogoTitle onClick={toggleMode}>
+            {mode === "main" ? "velog" : "NAME.log"}
+          </LogoTitle>
         </div>
         <div
           class="right_wrapper"
@@ -286,11 +239,31 @@ export default function Header() {
           <SearchIcon onClick={toggleLogin}>
             <img src={searchIcon} alt="search icon" />
           </SearchIcon>
-          {_loginBtn}
-          {_writeBtn}
-          <MenuWrapper>
-            {_menuIcon}
-            {_menu}
+          <LoginBtn 
+            style={isLogin ? {display:'none'} : {display:'block'}}
+            onClick={loginPopup}>로그인</LoginBtn>
+          <WriteBtn 
+            style={isLogin ? {display:'block'} : {display:'none'}}>
+              새 글 작성
+          </WriteBtn>
+          <MenuWrapper 
+            style={isLogin ? {display:'block'} : {display:'none'}}>
+            <MenuIconWrapper onClick={menuPopup}>
+              <ProfileIcon
+                src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
+                alt="profile icon"
+              />
+              <DropDownMenuIcon src={dropDownMenuIcon} alt="menu icon" />
+            </MenuIconWrapper>
+            <DropDownMenuWrapper 
+              style={isMenuPopup ? {display:'block'} : {display:'none'}}>
+              <MyVelogMenu>내 벨로그</MyVelogMenu>
+              <WriteMenu>새 글 작성</WriteMenu>
+              <SavesMenu>임시 글</SavesMenu>
+              <LikedMenu>읽기 목록</LikedMenu>
+              <SettingMenu>설정</SettingMenu>
+              <LogoutMenu onClick={toggleLogin}>로그아웃</LogoutMenu>
+            </DropDownMenuWrapper>
           </MenuWrapper>
         </div>
       </HeaderWrapper>
