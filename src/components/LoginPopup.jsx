@@ -61,7 +61,6 @@ const ExitButtonWrapper = styled.div`
 
 const ExitButton = styled.button`
   border: none;
-
   background-color: transparent;
   margin-bottom: 36px;
   &:hover {
