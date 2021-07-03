@@ -163,7 +163,6 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
               <LoginImg></LoginImg>
               <LoginGreetingText>환영합니다!</LoginGreetingText>
             </PopupLeftWrapper>
-
             <PopupRightWrapper>
               <ExitButtonWrapper>
                 <ExitButton onClick={() => setIsLoginPopup(false)}>
