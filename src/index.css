@@ -1,10 +1,32 @@
+@media (min-width: 1920px) {
+  body {width: 1680px;}
+}
+
+@media (max-width: 1919px) {
+  body {width: 1420px;}
+}
+
+@media (max-width: 1400px) {
+  body {
+    width: 1024px;
+  }
+}
+
+
 @font-face {
   font-family: "Fira Mono";
   src: url("./assets/Fonts/FiraMono-Medium.ttf") format("truetype");
 }
 
+html {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 body {
   margin: 0;
+  padding: 0px 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", 나눔고딕, "Nanum Gothic", "Noto Sans KR", "Noto Sans CJK KR", arial, 돋움, Dotum, Tahoma, Geneva, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

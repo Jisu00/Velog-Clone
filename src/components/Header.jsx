@@ -133,7 +133,11 @@ const Menu = styled.div`
 `;
 
 const MyVelogMenu = styled(Menu)``;
-const WriteMenu = styled(Menu)``;
+const WriteMenu = styled(Menu)`
+  @media (min-width: 1025px) {
+    display: none;
+  }
+`;
 const SavesMenu = styled(Menu)``;
 const LikedMenu = styled(Menu)``;
 const SettingMenu = styled(Menu)``;
