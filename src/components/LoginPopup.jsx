@@ -4,6 +4,7 @@ import deleteIcon from "assets/images/deleteIcon.svg";
 import githubIcon from "assets/images/githubIcon.png";
 import googleIcon from "assets/images/googleIcon.png";
 import config from "config";
+import GoogleLogin from "react-google-login";
 
 const PopupWrapper = styled.div`
   display: flex;
@@ -150,6 +151,10 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${config.GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000`;
   };
 
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+
   const toggleState = () => {
     setIsLogin(!isLogin);
   };
@@ -196,17 +201,29 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
                           }}
                         />
                       </IconButton>
-                      <IconButton>
-                        <img
-                          src={googleIcon}
-                          alt="google login icon"
-                          style={{
-                            width: "48px",
-                            height: "48px",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      </IconButton>
+                        <GoogleLogin
+                          clientId={process.env.REACT_APP_CLIENT_ID}
+                          render={(renderProps) => (
+                            <IconButton
+                              onClick={renderProps.onClick}
+                              disabled={renderProps.disabled}
+                            >
+                              <img
+                                src={googleIcon}
+                                alt="google login icon"
+                                style={{
+                                  width: "48px",
+                                  height: "48px",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            </IconButton>
+                          )}
+                          buttonText="Login"
+                          onSuccess={responseGoogle}
+                          onFailure={responseGoogle}
+                          cookiePolicy={"single_host_origin"}
+                        ></GoogleLogin>
                     </SocialButtonArea>
                   </SocialArea>
                 </LoginArea>
