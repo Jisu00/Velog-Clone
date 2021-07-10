@@ -1,7 +1,23 @@
-import React from "react";
-import { createGlobalStyle } from 'styled-components'
-import styled from "styled-components";
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import styled, { keyframes }  from "styled-components";
+import Editor from "components/Editor";
+import Preview from "components/Preview";
 
+//// animation
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const fadeOut = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
+`;
+
+////
 
 const GlobalStyle = createGlobalStyle`
   body, html {
@@ -59,33 +75,80 @@ const Title = styled.input`
 const TitleLine = styled.div`
   width: 64px;
   height: 6px;
-  margin: 30px 0px 20px 48px;
+  margin: 30px 0px 15px 48px;
   background: rgb(73, 80, 87);
 `;
 
 //// TAG
 
+const TagAlert = styled.div`
+  padding: 12px;
+  width: 325px;
+  font-size: 12px;
+  color: white;
+  background: rgb(52, 58, 64);
+  position: absolute;
+  bottom: -50px;
+  z-index: -1;
+`;
+
 const TagWrapper = styled.div`
-  margin: 0 48px;
+  width: 100%;
+  position: relative;
+  padding: 0 48px;
+  display: flex;
+  flex-flow: wrap;
+  height: auto;
+
+  &:focus-within {
+    ${TagAlert} {
+      z-index: 1;
+      animation: ${fadeIn} 0.3s forwards;
+      transform: translate(0, 10px);
+      transition-property: all;
+      transition-duration: 0.3s;
+    }
+  }
+
+  &:not(:focus-within) {
+    ${TagAlert} {
+      z-index: -1;
+      animation: ${fadeOut} 0.3s forwards;
+      transform: translate(0, -10px);
+      transition-property: all;
+      transition-duration: 0.3s;
+    }
+  }
+`;
+
+const Tag = styled.div`
+  display: inline-box;
+  padding: 5px 15px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  background: #f1f3f5;
+  color: rgb(18, 184, 134);
+  border-radius: 30px;
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
 `;
 
 const TagInput = styled.input`
   border: none;
   outline: none;
+  margin-top: 6px;
+  margin-bottom: 12px;
   font-size: 1.125rem;
 `;
 
-//const Tag = styled.div``;
-
-const TagAlert = styled.div`
-  
-`;
 
 //// TOOL
 
 const ToolBar = styled.div`
   width: 100%;
-  padding: 18px 48px;
+  min-width: 700px;
+  padding: 0px 48px 18px 48px;
   display: flex;
 `;
 
@@ -144,23 +207,6 @@ const HyperLink = styled(ToolBtn)``;
 const Images = styled(ToolBtn)``;
 const Codes = styled(ToolBtn)``;
 
-//// WRITE
-
-const WriteArea = styled.textarea`
-  width: 100%;
-  height: 350px;
-  border: none;
-  outline: none;
-  font-size: 1.125rem;
-  padding: 0px 48px 20px 48px;
-  resize: none;
-
-  &::placeholder {
-    color: rgb(134, 142, 155, 0.7);
-    font-style: italic;
-    word-spacing: 0.3em;
-  }
-`;
 
 //// FOOTER
 
@@ -194,6 +240,8 @@ const ExitBtn = styled(FooterBtn)`
   }
 `;
 
+const ExitLink = styled(Link)``;
+
 const SaveBtn = styled(FooterBtn)`
   font-weight: bold;
   color: rgb(73, 80, 87);
@@ -218,21 +266,66 @@ const PublishBtn = styled(FooterBtn)`
   }
 `;
 
-const PreviewWrapper = styled.div`
-  @media (max-width: 1024px) {
-    display: none;
-  }  
-  @media (min-width: 1025px) {
-    width: 50%;
-  }
 
-  height: 98vh;
-  padding: 48px;
-  background: rgb(251, 253, 252);
-  overflow-y: scroll;
-`;
 
 export default function Write() {
+  //const [text, setText] = useState('');
+  const [tags, setTag] = useState([]);
+  
+  const max_tag_id = useRef(0);
+
+  /*const handleChange = (e) => {
+    const TypedText = e.target.value;
+    setText(TypedText);
+    window.localStorage.setItem('text', TypedText);
+  }*/
+
+  const handleClick = (e) => {
+    deleteTag(e.target.id);
+  }
+
+  const handleKeyDown = (e) => {
+    if ((e.keyCode === 13 || e.keyCode === 188) 
+          && (e.target.value !== '')) { // Enter, ','
+      if (!isDuplicateValue(e)) insertTag(e);
+    }
+    if (e.keyCode === 8 && e.target.value === '') { // BackSpace
+      if (tags.length > 0) deleteTag(tags[tags.length-1].props.id);
+    }
+  }
+
+  const isDuplicateValue = (e) => {
+    for (let i=0; i<tags.length; i++) {
+      if (tags[i].props.value === e.target.value){
+        e.target.value = "";
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const insertTag = (e) => {
+    const inputText = e.target.value;
+    max_tag_id.current++;
+
+    const newTag = <Tag 
+                      id={max_tag_id.current}
+                      key={max_tag_id.current}
+                      value={inputText}
+                      onClick={handleClick}
+                    >{inputText}</Tag>
+
+    setTag([
+      ...tags, newTag
+    ]);
+
+    e.target.value = "";
+  }
+
+  const deleteTag = (selectedID) => {
+    setTag(tags.filter(tag => tag.props.id !== selectedID));
+  }
+
   return (
     <>
     <GlobalStyle />
@@ -247,8 +340,16 @@ export default function Write() {
             <TitleLine></TitleLine>
           </TitleWrapper>
           <TagWrapper>
-            <TagInput type="text" placeholder="태그를 입력하세요"/>
-            <TagAlert></TagAlert>
+            {tags}
+            <TagInput 
+              type="text" 
+              placeholder="태그를 입력하세요"
+              onKeyDown={handleKeyDown}
+            />
+            <TagAlert>
+              쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다.<br/>
+              등록된 태그를 클릭하면 삭제됩니다.
+            </TagAlert>
           </TagWrapper>
           <ToolBar>
             <HToolWrapper>
@@ -268,16 +369,22 @@ export default function Write() {
             <Codes><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 18"  height="28" width="28" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path></svg></Codes>
           </ToolBar>
         </WriteHeader>
-        <WriteArea type="text" placeholder="당신의 이야기를 적어보세요..."/>
+        <Editor
+          type="text" 
+          placeholder="당신의 이야기를 적어보세요..."
+          //onInputChange={handleChange}
+        />
         <WriteFooter>
-          <ExitBtn><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>&nbsp;&nbsp;나가기</ExitBtn>
+          <ExitLink to="/">
+            <ExitBtn><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>&nbsp;&nbsp;나가기</ExitBtn>
+          </ExitLink>
           <SaveBtn>임시저장</SaveBtn>
           <PublishBtn>출간하기</PublishBtn>
         </WriteFooter>
       </WriteWrapper>
-      <PreviewWrapper>
-        
-      </PreviewWrapper>
+      <Preview 
+        //inputValue={{text}}
+      ></Preview>
     </PageWrapper>
     </>
   );
