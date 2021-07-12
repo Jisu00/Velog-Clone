@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import LoginPopup from "components/LoginPopup";
 import styled, { keyframes } from "styled-components";
 import logoIcon from "assets/images/logoIcon.svg";
@@ -9,14 +10,15 @@ import "../index.css";
 /// animation
 
 const fadeIn = keyframes`
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+`;
+
+const fadeOut = keyframes`
   from { opacity: 1; }
   to { opacity: 0.5; }
 `;
 
-const fadeOut = keyframes`
-  from { opacity: 0.5; }
-  to { opacity: 1; }
-`;
 
 const setShadow = keyframes`
   from { box-shadow: 0px 0px 5px 0px lightgray; }
@@ -103,7 +105,7 @@ const MenuIconWrapper = styled.div`
       animation: ${setShadow} 0.3s forwards;
     }
     ${DropDownMenuIcon} {
-      animation: ${fadeOut} 0.3s forwards;
+      animation: ${fadeIn} 0.3s forwards;
     }
   }
 `;
@@ -130,6 +132,11 @@ const Menu = styled.div`
   &:hover {
     background: #f8f9fa;
   }
+`;
+
+const MenuLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
 
 const MyVelogMenu = styled(Menu)``;
@@ -173,6 +180,11 @@ const WriteBtn = styled(Btn)`
   }
 `;
 
+const WriteBtnLink = styled(Link)`
+  text-decoration: none;
+  color: #343a40;
+`;
+
 const LoginBtn = styled(Btn)`
   margin-right: 5px;
   float: right;
@@ -180,7 +192,7 @@ const LoginBtn = styled(Btn)`
   background: #343a40;
   border: none;
   &:hover {
-    animation: ${fadeIn} 0.2s forwards;
+    animation: ${fadeOut} 0.2s forwards;
   }
 `;
 
@@ -243,10 +255,11 @@ export default function Header() {
           <LoginBtn 
             style={isLogin ? {display:'none'} : {display:'block'}}
             onClick={loginPopup}>로그인</LoginBtn>
-          <WriteBtn 
-            style={isLogin ? {display:'block'} : {display:'none'}}>
-              새 글 작성
-          </WriteBtn>
+            <WriteBtnLink to="/write">
+              <WriteBtn
+               style={isLogin ? {display:'block'} : {display:'none'}}>새 글 작성
+              </WriteBtn>
+            </WriteBtnLink>
           <MenuWrapper 
             style={isLogin ? {display:'block'} : {display:'none'}}>
             <MenuIconWrapper onClick={menuPopup}>
@@ -259,7 +272,7 @@ export default function Header() {
             <DropDownMenuWrapper 
               style={isMenuPopup ? {display:'block'} : {display:'none'}}>
               <MyVelogMenu>내 벨로그</MyVelogMenu>
-              <WriteMenu>새 글 작성</WriteMenu>
+              <MenuLink to="/write"><WriteMenu>새 글 작성</WriteMenu></MenuLink>
               <SavesMenu>임시 글</SavesMenu>
               <LikedMenu>읽기 목록</LikedMenu>
               <SettingMenu>설정</SettingMenu>
