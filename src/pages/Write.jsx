@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled, { keyframes }  from "styled-components";
@@ -34,6 +34,7 @@ const PageWrapper = styled.div`
   height: 100%;
   display: flex;
   overflow: hidden;
+  animation: ${fadeIn} 0.5s forwards;
 `;
 
 const WriteWrapper = styled.div`
@@ -269,61 +270,87 @@ const PublishBtn = styled(FooterBtn)`
 
 
 export default function Write() {
-  //const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
   const [tags, setTag] = useState([]);
   
   const max_tag_id = useRef(0);
 
-  /*const handleChange = (e) => {
+  useEffect(()=>{
+    if (window.localStorage.title)
+      setTitle(window.localStorage.title);
+    if (window.localStorage.text)
+      setText(window.localStorage.text);
+  }, []);
+  
+
+  const handleTitleChange = (e) => {
+    const TypedTitle = e.target.value;
+    setTitle(TypedTitle);
+  }
+
+  const handleTextChange = (e) => {
     const TypedText = e.target.value;
     setText(TypedText);
-    window.localStorage.setItem('text', TypedText);
-  }*/
+  }
 
-  const handleClick = (e) => {
+  const handleTagClick = (e) => {
     deleteTag(e.target.id);
   }
 
-  const handleKeyDown = (e) => {
+  const handleTagKeyDown = (e) => {
     if ((e.keyCode === 13 || e.keyCode === 188) 
-          && (e.target.value !== '')) { // Enter, ','
-      if (!isDuplicateValue(e)) insertTag(e);
+          && (e.target.value !== '')) // Enter, ','
+    { 
+      let inputText = e.target.value;
+
+      e.target.value = "";
+
+      if (inputText[0] === "#")
+        inputText = inputText.substr(1);
+
+      if (!isExistValue(e, inputText)) 
+        insertTag(inputText);
     }
+    
     if (e.keyCode === 8 && e.target.value === '') { // BackSpace
-      if (tags.length > 0) deleteTag(tags[tags.length-1].props.id);
+      if (tags.length > 0) 
+        deleteTag(tags[tags.length-1].props.id);
     }
   }
 
-  const isDuplicateValue = (e) => {
+  const isExistValue = (inputText) => {
     for (let i=0; i<tags.length; i++) {
-      if (tags[i].props.value === e.target.value){
-        e.target.value = "";
+      if (tags[i].props.value === inputText) 
         return true;
-      }
     }
+    
     return false;
   }
 
-  const insertTag = (e) => {
-    const inputText = e.target.value;
+  const insertTag = (inputText) => {
     max_tag_id.current++;
 
     const newTag = <Tag 
                       id={max_tag_id.current}
                       key={max_tag_id.current}
                       value={inputText}
-                      onClick={handleClick}
+                      onClick={handleTagClick}
                     >{inputText}</Tag>
 
     setTag([
       ...tags, newTag
     ]);
-
-    e.target.value = "";
   }
 
   const deleteTag = (selectedID) => {
     setTag(tags.filter(tag => tag.props.id !== selectedID));
+  }
+
+  const saveContent = () => {
+    window.localStorage.setItem('title', title);
+    window.localStorage.setItem('text', text);
+    alert("임시 저장 완료"); // alert 창 구현 필요
   }
 
   return (
@@ -335,7 +362,9 @@ export default function Write() {
           <TitleWrapper>
             <Title 
               type="text" 
-              placeholder="제목을 입력하세요" 
+              value={title}
+              placeholder="제목을 입력하세요"
+              onChange={handleTitleChange}
             />
             <TitleLine></TitleLine>
           </TitleWrapper>
@@ -344,7 +373,7 @@ export default function Write() {
             <TagInput 
               type="text" 
               placeholder="태그를 입력하세요"
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleTagKeyDown}
             />
             <TagAlert>
               쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다.<br/>
@@ -371,19 +400,25 @@ export default function Write() {
         </WriteHeader>
         <Editor
           type="text" 
+          editorValue={text}
+          onInputChange={handleTextChange}
           placeholder="당신의 이야기를 적어보세요..."
-          //onInputChange={handleChange}
         />
         <WriteFooter>
           <ExitLink to="/">
             <ExitBtn><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>&nbsp;&nbsp;나가기</ExitBtn>
           </ExitLink>
-          <SaveBtn>임시저장</SaveBtn>
+          <SaveBtn
+            onClick={saveContent}
+          >
+            임시저장
+          </SaveBtn>
           <PublishBtn>출간하기</PublishBtn>
         </WriteFooter>
       </WriteWrapper>
       <Preview 
-        //inputValue={{text}}
+        titleValue={title}
+        inputValue={text}
       ></Preview>
     </PageWrapper>
     </>

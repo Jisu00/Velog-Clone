@@ -28,16 +28,16 @@ const PreviewTitle = styled.div`
 
 const PreviewText = styled.div`
   margin: 20px 0px;
+  font-size: 1.125rem;
 `;
 
-const Preview = ( inputValue ) => {
+const Preview = ({ titleValue, inputValue }) => {
   const converter = new showdown.Converter();
-  const html = converter.makeHtml(toString(inputValue));
+  const html = converter.makeHtml(inputValue);
 
   return (
     <PreviewWrapper>
-      <PreviewTitle>
-      </PreviewTitle>
+      <PreviewTitle dangerouslySetInnerHTML={{ __html: titleValue }}></PreviewTitle>
       <PreviewText dangerouslySetInnerHTML={{ __html: html }}></PreviewText>
     </PreviewWrapper>
   );
