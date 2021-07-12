@@ -202,7 +202,7 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
                         />
                       </IconButton>
                         <GoogleLogin
-                          clientId={process.env.REACT_APP_CLIENT_ID}
+                          clientId={config.GOOGLE_CLIENT_ID}
                           render={(renderProps) => (
                             <IconButton
                               onClick={renderProps.onClick}
