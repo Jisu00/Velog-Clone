@@ -69,7 +69,16 @@ const LogoTitle = styled.div`
   font-family: "Fira Mono";
 `;
 
-const SearchIcon = styled.div`
+const LoginToggleIcon = styled.div` // 임시로 설정
+  width: 20px;
+  height: 20px;
+  background: black;
+  cursor: pointer;
+`;
+
+const SearchBtnLink = styled(Link)``;
+
+const SearchBtn = styled.div`
   padding: 10px;
   padding-bottom: 5px;
   border-radius: 25px;
@@ -200,7 +209,7 @@ export default function Header() {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [mode, setMode] = useState("blog");
+  const [mode, setMode] = useState("main");
 
   const loginPopup = () => {
     setIsLoginPopup(true);
@@ -249,9 +258,15 @@ export default function Header() {
           class="right_wrapper"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <SearchIcon onClick={toggleLogin}>
-            <img src={searchIcon} alt="search icon" />
-          </SearchIcon>
+          <LoginToggleIcon 
+            onClick={toggleLogin}
+          ></LoginToggleIcon>
+          <SearchBtnLink to="/search">
+            <SearchBtn>
+              <img src={searchIcon} alt="search icon" />
+            </SearchBtn>
+          </SearchBtnLink>
+          
           <LoginBtn 
             style={isLogin ? {display:'none'} : {display:'block'}}
             onClick={loginPopup}>로그인</LoginBtn>

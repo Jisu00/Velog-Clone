@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import styled, { keyframes }  from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Editor from "components/Editor";
 import Preview from "components/Preview";
+import Alert from "components/Alert";
 
 //// animation
 
@@ -273,6 +274,9 @@ export default function Write() {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [tags, setTag] = useState([]);
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState(null);
+  const [alertColor, setAlertColor] = useState(null);
   
   const max_tag_id = useRef(0);
 
@@ -282,6 +286,10 @@ export default function Write() {
     if (window.localStorage.text)
       setText(window.localStorage.text);
   }, []);
+
+  useEffect(()=>{
+    if (alertColor === null) return;
+  });
   
 
   const handleTitleChange = (e) => {
@@ -348,15 +356,35 @@ export default function Write() {
   }
 
   const saveContent = () => {
-    window.localStorage.setItem('title', title);
-    window.localStorage.setItem('text', text);
-    alert("임시 저장 완료"); // alert 창 구현 필요
+    if (title === '' || text === ''){
+      setAlertColor("red");
+      setAlertText("제목 또는 내용이 비어있습니다.");
+    }
+    else {
+      window.localStorage.setItem('title', title);
+      window.localStorage.setItem('text', text);
+      setAlertColor("green");
+      setAlertText("포스트가 임시저장되었습니다.");
+    }
+    toggleAlert();
   }
+
+  const toggleAlert = () => {
+    setIsAlert(true);
+  }
+
 
   return (
     <>
     <GlobalStyle />
     <PageWrapper>
+      <Alert
+        color={alertColor}
+        text={alertText}
+        isShow={isAlert}
+        setIsAlert={setIsAlert}
+      >
+      </Alert>
       <WriteWrapper>
         <WriteHeader>
           <TitleWrapper>
