@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import "styles/PostData.css";
 import imageIcon from "assets/images/imageIcon.svg";
+import globeIcon from "assets/images/globeIcon.svg";
+import lockIcon from "assets/images/lockIcon.svg";
+import addIcon from "assets/images/addIcon.svg";
 
 const DataWrapper = styled.div`
   height: 100vh;
@@ -31,7 +35,10 @@ const SeparationLine = styled.div`
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
+
+const Info = styled.div``;
 
 const Title = styled.h3`
   font-size: 1.3125rem;
@@ -85,17 +92,36 @@ const ContentCount = styled.div`
   color: rgb(134, 142, 150);
 `;
 
-const Btn = styled.button`
+const URLInput = styled.input.attrs({
+  type: "text",
+  size: 35,
+})`
+  display: flex;
+  background: white;
   border: none;
+  outline: none;
+  box-shadow: rgb(0 0 0 / 3%) 0px 0px 4px 0px;
+  padding: 0.5rem 0.875rem;
+  line-height: 1.5;
+`;
+
+const PublicButtonWrapper = styled.div`
+  display: flex;
+`;
+
+const ContentSection = styled.section`
+  margin-top: 24px;
+`;
+
+const Btn = styled.button`
   cursor: pointer;
   font-size: 1.125em;
   padding: 8px 20px;
   border-radius: 5px;
 `;
 
-const BigBtn = styled.button`
+const BigBtn = styled(Btn)`
   outline: none;
-  flex: 1 1 0%;
   height: 3rem;
   display: inline-flex;
   -webkit-box-align: center;
@@ -104,16 +130,12 @@ const BigBtn = styled.button`
   justify-content: flex-start;
   font-weight: bold;
   background: white;
-  font-size: 1.125rem;
   box-shadow: rgb(0 0 0 / 5%) 0px 0px 4px 0px;
-  padding: 0px 0px 0px 1rem;
-  border-radius: 4px;
   cursor: pointer;
-  border: 1px solid rgb(32, 201, 151);
-  color: rgb(32, 201, 151);
 `;
 
 const UploadButton = styled(Btn)`
+  border: none;
   font-weight: bold;
   background: #fff;
   color: rgb(32, 201, 151);
@@ -123,7 +145,37 @@ const UploadButton = styled(Btn)`
   }
 `;
 
+const PublicBtn = styled(BigBtn)`
+  border: ${(props) => props.border};
+`;
+
+const NonPublicBtn = styled(BigBtn)`
+  margin-left: 16px;
+  border: ${(props) => props.border};
+`;
+
+const BtnText = styled.div`
+  flex: 1 1 0%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+`;
+
+const SeriesButton = styled(BigBtn)`
+  display: flex;
+  justify-content: center;
+  border: none;
+  color: rgb(32, 201, 151);
+  width: 100%;
+  &:hover {
+    background: rgb(240, 242, 244);
+  }
+`;
+
 const CancelBtn = styled(Btn)`
+  border: none;
   font-weight: bold;
   background: rgb(134, 142, 150);
   color: #fff;
@@ -134,19 +186,27 @@ const CancelBtn = styled(Btn)`
 `;
 
 const PublishBtn = styled(Btn)`
+  border: none;
   font-weight: bold;
   background: rgb(18, 184, 134);
-  color: white;
-  right: 15px;
+  color: #fff;
+  margin-top: 1rem;
+  margin-left: 14px;
   &:hover {
     background: rgb(18, 184, 134, 0.7);
   }
 `;
 
+const ButtonSection = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export default function PostData() {
   const [title, setTitle] = useState("title");
   const [content, setContent] = useState("");
-
+  const [publicBtnStyle, setPublicBtnStyle] = useState(true);
+  const [url, setUrl] = useState("");
   return (
     <DataWrapper>
       <DataForm>
@@ -170,11 +230,67 @@ export default function PostData() {
         </PostWrapper>
         <SeparationLine></SeparationLine>
         <InfoWrapper>
-          <Title>공개 설정</Title>
-          <Title>URL 설정</Title>
-          <Title>시리즈 설정</Title>
-          <CancelBtn>취소</CancelBtn>
-          <PublishBtn>출간하기</PublishBtn>
+          <Info>
+            <Title>공개 설정</Title>
+            <PublicButtonWrapper>
+              <PublicBtn
+                onClick={() => setPublicBtnStyle(!publicBtnStyle)}
+                className={publicBtnStyle ? "public" : "non-public"}
+                border={
+                  publicBtnStyle
+                    ? "1px solid rgb(32, 201, 151)"
+                    : "1px solid transparent"
+                }
+              >
+                <img
+                  src={globeIcon}
+                  alt="globe icon"
+                  className={publicBtnStyle ? "public-svg" : "non-public-svg"}
+                  style={{ marginRight: "10px" }}
+                />
+                <BtnText>전체 공개</BtnText>
+              </PublicBtn>
+              <NonPublicBtn
+                onClick={() => setPublicBtnStyle(!publicBtnStyle)}
+                className={publicBtnStyle ? "non-public" : "public"}
+                border={
+                  publicBtnStyle
+                    ? "1px solid transparent" : "1px solid rgb(32, 201, 151)"
+                }
+              >
+                <img
+                  src={lockIcon}
+                  alt="lock icon"
+                  className={publicBtnStyle ? "non-public-svg" : "public-svg"}
+                  style={{ marginRight: "10px" }}
+                />
+                비공개
+              </NonPublicBtn>
+            </PublicButtonWrapper>
+            <ContentSection>
+              <Title>URL 설정</Title>
+              <URLInput
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                }}
+              ></URLInput>
+            </ContentSection>
+            <ContentSection>
+              <Title>시리즈 설정</Title>
+              <SeriesButton>
+                <img
+                  src={addIcon}
+                  alt="add series icon"
+                  className="series-svg"
+                />
+                시리즈에 추가하기
+              </SeriesButton>
+            </ContentSection>
+          </Info>
+          <ButtonSection>
+            <CancelBtn>취소</CancelBtn>
+            <PublishBtn>출간하기</PublishBtn>
+          </ButtonSection>
         </InfoWrapper>
       </DataForm>
     </DataWrapper>

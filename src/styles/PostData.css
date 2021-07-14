@@ -1,0 +1,22 @@
+.public{
+  color: rgb(32, 201, 151); 
+}
+
+.non-public{
+  border: 1px solid transparent;
+  color: rgb(134, 142, 150);
+}
+
+.public-svg{
+  filter: invert(67%) sepia(43%) saturate(728%) hue-rotate(110deg) brightness(89%) contrast(90%);
+}
+
+.series-svg{
+  filter: invert(67%) sepia(43%) saturate(728%) hue-rotate(110deg) brightness(89%) contrast(90%);
+  margin-right: 14px;
+}
+
+.non-public-svg{
+  filter: invert(61%) sepia(7%) saturate(448%) hue-rotate(169deg) brightness(90%) contrast(84%);
+}
+
