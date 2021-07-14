@@ -1,5 +1,5 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components';
+import React from "react";
+import styled, { keyframes } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import Header from "components/Header";
 import searchIcon from "assets/images/searchIcon.svg";
@@ -55,7 +55,7 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   font-size: 1.125rem;
-  
+
   &::placeholder {
     color: #b0b8c0;
   }
@@ -76,10 +76,10 @@ const SearchWrapper = styled.div`
       transform: scale(1.4);
     }
   }
-  
+
   display: flex;
   margin-top: 10px;
-  margin-bottom: 24px!important;
+  margin-bottom: 24px !important;
   align-items: center;
   border: 1px solid black;
   transition: height 0.3s, margin 0.3s;
@@ -101,20 +101,16 @@ const ContentWrapper = styled.div`
 
 const TotalPostText = styled.div``;
 
-
-
-
-
 export default function Search() {
   const sendTypedText = (e) => {
     /*const typedText = e.target.value;
 
     window.location.href = "?=" + typedText*/
-  }
+  };
 
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       <PageWrapper>
         <Header></Header>
         <MainWrapper>
@@ -129,11 +125,12 @@ export default function Search() {
           </SearchWrapper>
           <ContentWrapper>
             <TotalPostText>
-              총 <label style={{ fontWeight: 'bold' }}>0개</label>의 포스트를 찾았습니다.
+              총 <label style={{ fontWeight: "bold" }}>0개</label>의 포스트를
+              찾았습니다.
             </TotalPostText>
           </ContentWrapper>
         </MainWrapper>
       </PageWrapper>
     </>
-  )
+  );
 }
