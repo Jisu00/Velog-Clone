@@ -108,6 +108,7 @@ export const SearchWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div``;
+
 export const TotalPostText = styled.div`
   @media (min-width: 769px) {
     font-size: 18px;

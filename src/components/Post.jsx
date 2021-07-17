@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Tag from "components/Tag";
 
 const PostWrapper = styled.div`
   padding-top: 12px;
@@ -17,6 +18,7 @@ const PostTitle = styled.div`
   font-weight: bold;
   margin: 8px 0;
 `;
+
 const PostContent = styled.div`
   @media (min-width: 769px) {
     font-size: 16px;
@@ -25,11 +27,14 @@ const PostContent = styled.div`
   margin: 6px 0;
   color: #495057;
 `;
+
 const TagsWrapper = styled.div`
-  margin: 20px 0;
-  border: 1px solid gray;
-  height: 24px;
+  margin-top: 26px;
+  margin-bottom: 1px;
 `;
+
+const PostTag = styled(Tag)``;
+
 const SubInfoWrapper = styled.div`
   @media (min-width: 769px) {
     font-size: 14px;
@@ -38,10 +43,12 @@ const SubInfoWrapper = styled.div`
   font-size: 0.75rem;
   color: #868e96
 `;
+
 const PostDate = styled.div``;
 const Separator = styled.div`
   margin: 0px 8px;
 `;
+
 const TotalComment = styled.div``;
 
 
@@ -55,7 +62,18 @@ const Post = () => {
       </PostThumbNail>
       <PostTitle>Post Title</PostTitle>
       <PostContent>Post Content</PostContent>
-      <TagsWrapper></TagsWrapper>
+      <TagsWrapper>
+        <PostTag
+          value="tag1"
+          mode="post"
+          //handleClick={}
+        ></PostTag>
+        <PostTag
+          value="tag2"
+          mode="post"
+          //handleClick={}
+        ></PostTag>
+      </TagsWrapper>
       <SubInfoWrapper>
         <PostDate>2021년 2월 24일</PostDate>
         <Separator>·</Separator>

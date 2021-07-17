@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Editor from "components/Editor";
 import Preview from "components/Preview";
 import Alert from "components/Alert";
+import Tag from "components/Tag";
 import boldIcon from "assets/images/boldIcon.svg";
 import italicIcon from "assets/images/italicIcon.svg";
 import lineThroughIcon from "assets/images/lineThroughIcon.svg";
@@ -19,7 +20,6 @@ import {
   TitleLine,
   TagAlert,
   TagWrapper,
-  Tag,
   TagInput,
   ToolBar,
   HToolWrapper,
@@ -94,7 +94,7 @@ export default function Write() {
       if (inputText[0] === "#")
         inputText = inputText.substr(1);
 
-      if (!isExistValue(e, inputText)) 
+      if (!isExistValue(inputText)) 
         insertTag(inputText);
     }
     
@@ -120,8 +120,9 @@ export default function Write() {
                       id={max_tag_id.current}
                       key={max_tag_id.current}
                       value={inputText}
-                      onClick={handleTagClick}
-                    >{inputText}</Tag>
+                      mode="write"
+                      handleClick={handleTagClick}
+                    ></Tag>
 
     setTag([
       ...tags, newTag

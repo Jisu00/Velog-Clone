@@ -119,19 +119,6 @@ export const TagWrapper = styled.div`
   }
 `;
 
-export const Tag = styled.div`
-  display: inline-box;
-  padding: 5px 15px;
-  margin-right: 12px;
-  margin-bottom: 12px;
-  background: #f1f3f5;
-  color: rgb(18, 184, 134);
-  border-radius: 30px;
-  font-size: 16px;
-  white-space: nowrap;
-  cursor: pointer;
-`;
-
 export const TagInput = styled.input`
   border: none;
   outline: none;
