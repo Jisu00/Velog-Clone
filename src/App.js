@@ -7,6 +7,7 @@ import Write from "pages/Write";
 import GlobalStyles from "styles/GlobalStyles";
 import PostData from "pages/PostData";
 import Search from "pages/Search";
+import BlogMain from "pages/BlogMain";
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path="/write" exact component={Write} />
 				<Route path="/post-data" exact component={PostData} />
 				<Route path="/search" exact component={Search} />
+				<Route path="/blog-main" exact component={BlogMain} />
 			</Switch>
 		</div>
 	);

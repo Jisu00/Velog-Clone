@@ -19,6 +19,7 @@ import {
   ProfileIcon,
   DropDownMenuIcon,
   DropDownMenuWrapper,
+  MyVelogMenuLink,
   MyVelogMenu,
   MenuLink,
   WriteMenu,
@@ -33,7 +34,7 @@ export default function Header() {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [mode, setMode] = useState("main");
+  const [mode, setMode] = useState("blog");
 
   const loginPopup = () => {
     setIsLoginPopup(true);
@@ -110,7 +111,9 @@ export default function Header() {
             </MenuIconWrapper>
             <DropDownMenuWrapper 
               style={isMenuPopup ? {display:'block'} : {display:'none'}}>
-              <MyVelogMenu>내 벨로그</MyVelogMenu>
+              <MyVelogMenuLink to="/blog-main">
+                <MyVelogMenu>내 벨로그</MyVelogMenu>
+              </MyVelogMenuLink>
               <MenuLink to="/write"><WriteMenu>새 글 작성</WriteMenu></MenuLink>
               <SavesMenu>임시 글</SavesMenu>
               <LikedMenu>읽기 목록</LikedMenu>

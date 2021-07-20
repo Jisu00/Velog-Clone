@@ -142,6 +142,9 @@ export const MenuLink = styled(Link)`
 `;
 
 export const MyVelogMenu = styled(Menu)``;
+
+export const MyVelogMenuLink = styled(MenuLink)``;
+
 export const WriteMenu = styled(Menu)`
   @media (min-width: 1025px) {
     display: none;
