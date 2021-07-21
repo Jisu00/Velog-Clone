@@ -6,14 +6,11 @@ const SearchPostWrapper = styled.div`
   @media (min-width: 769px) {
     padding: 36px 0;
   }
-
-  border-top: 1px solid lightgray;
 `;
 
 const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 24px 0px;
 `;
 
 const UserIcon = styled.img`

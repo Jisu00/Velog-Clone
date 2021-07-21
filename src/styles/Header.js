@@ -46,6 +46,8 @@ export const LogoIcon = styled.div`
   margin-right: 15px;
 `;
 
+export const LogoIconLink = styled(Link)``;
+
 export const LogoTitle = styled.div`
   @media (max-width: 1024px) {
     font-size: 20px;
@@ -60,6 +62,10 @@ export const LogoTitle = styled.div`
     src: url("./assets/Fonts/FiraMono-Medium.ttf");
   }
   font-family: "Fira Mono";
+`;
+
+export const LogoTitleLink = styled(Link)`
+  text-decoration: none;
 `;
 
 export const LoginToggleIcon = styled.div` // 임시로 설정

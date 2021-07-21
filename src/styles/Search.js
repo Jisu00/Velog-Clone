@@ -114,11 +114,11 @@ export const TotalPostText = styled.div`
     font-size: 18px;
   }
 
-  padding-bottom: 5px;
+  padding-bottom: 25px;
   background: white;
   width: 100%;
   position: relative;
-  top: 1px;
 `;
+
 export const SearchPostWrapper = styled.div``;
 

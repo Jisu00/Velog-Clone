@@ -7,7 +7,9 @@ import "../index.css";
 import {
   HeaderWrapper,
   LogoIcon,
+  LogoIconLink,
   LogoTitle,
+  LogoTitleLink,
   LoginToggleIcon,
   SearchBtnLink,
   SearchBtn,
@@ -33,7 +35,7 @@ import {
 export default function Header() {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [mode, setMode] = useState("blog");
 
   const loginPopup = () => {
@@ -71,13 +73,17 @@ export default function Header() {
           class="logo_wrapper"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <LogoIcon style={mode === "main" ? {display:'none'}:{display:'block'}}
-            onClick={toggleMode}>
-            <img src={logoIcon} alt="logo icon" />
-          </LogoIcon>
-          <LogoTitle onClick={toggleMode}>
-            {mode === "main" ? "velog" : "NAME.log"}
-          </LogoTitle>
+          <LogoIconLink to="/">
+            <LogoIcon style={mode === "main" ? {display:'none'}:{display:'block'}}
+              onClick={toggleMode}>
+              <img src={logoIcon} alt="logo icon" />
+            </LogoIcon>
+          </LogoIconLink>
+          <LogoTitleLink to={mode === "main" ? "/" : "/blog-main"}>
+            <LogoTitle onClick={toggleMode}>
+              {mode === "main" ? "velog" : "NAME.log"}
+            </LogoTitle>
+          </LogoTitleLink>
         </div>
         <div
           class="right_wrapper"

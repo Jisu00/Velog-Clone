@@ -5,6 +5,8 @@ import Tag from "components/Tag";
 const PostWrapper = styled.div`
   padding-top: 12px;
   padding-bottom: 32px;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 35px;
 `;
 
 const PostThumbNail = styled.img`
@@ -41,7 +43,8 @@ const SubInfoWrapper = styled.div`
   }
   display: flex;
   font-size: 0.75rem;
-  color: #868e96
+  color: #868e96;
+  margin-top: 10px;
 `;
 
 const PostDate = styled.div``;
