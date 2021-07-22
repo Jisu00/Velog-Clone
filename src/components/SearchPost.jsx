@@ -4,7 +4,7 @@ import Post from "components/Post";
 
 const SearchPostWrapper = styled.div`
   @media (min-width: 769px) {
-    padding: 36px 0;
+    margin-top: 60px;
   }
 `;
 

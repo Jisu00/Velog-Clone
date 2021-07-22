@@ -1,5 +1,19 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { createGlobalStyle } from "styled-components";
+
+//// animation
+
+export const fadeIn = keyframes`
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+`;
+
+export const fadeOut = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0.4; }
+`;
+
+////
 
 export const GlobalStyle = createGlobalStyle`
   body, html {
@@ -8,8 +22,11 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+    background: white;
   }
 `;
+
+////
 
 export const PageWrapper = styled.div`
   width: 100%;
@@ -23,10 +40,15 @@ export const FlexWrapper = styled.div`
   }
 
   display: flex;
+  height: 100%;
   flex-direction: column;
 `;
 
 export const HeaderWrapper = styled.div`
+  @media (min-width: 769px) {
+    padding: 0px 74px;
+  }
+
   padding: 0px 20px;
 `;
 
@@ -139,12 +161,23 @@ export const DividingLine = styled.div`
 ////
 
 export const MenuWrapper = styled.div`
+  @media (min-width: 769px) {
+    width: 400px;
+    margin: 52px 200px;
+    margin-bottom: 32px;
+  }
+
   display: flex;
   width: 100%;
   position: relative;
 `;
 
 export const Menu = styled.div`
+  @media (min-width: 769px) {
+    font-size: 21px;
+    padding: 5px 0px;
+  }
+
   width: 33.33%;
   text-align: center;
   padding: 10px 0px;
@@ -183,18 +216,93 @@ export const MenuUnderline = styled.div`
   transition: left 0.3s;
 `;
 
+//// SEARCH
+
+export const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const SearchBorderWrapper = styled.div`
+  @media (min-width: 1025px) {
+    display: flex;
+  }
+
+  display: none;
+  margin: 20px 0;
+  align-items: center;
+  border: 1px solid black;
+  height: 38px;
+  width: 200px;
+  z-index: 2;
+
+  &:focus-within {
+    animation: ${fadeIn} 0.3s forwards;
+  }
+  &:not(:focus-within) {
+    animation: ${fadeOut} 0.3s forwards;
+  }
+`;
+
+export const SearchInput = styled.input`
+  height: 2.25rem;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+
+  &::placeholder {
+    color: gray;
+  }
+`;
+
+export const SearchIcon = styled.div`
+  margin: 0px 10px;
+  margin-top: 3px;
+`;
+
 //// POST
 
 export const PostWrapper = styled.div`
+  @media (min-width: 769px) {
+    width: 800px;
+  }
+
   display: none;
   position: relative;
   top: 20px;
   padding: 0 20px;
+  min-height: 200px;
 `;
 
-export const TagMenuWrapper = styled.div`
+export const TagListWrapper = styled.div`
+  @media (max-width: 1200px) {
+    display: none;
+  }
+
+  width: 184px;
+  display: ${props => props.menu === "post" ? "block" : "none"};
+`;
+
+export const TagListText = styled.div`
+  color: #495057;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid #adb5bd;
   position: relative;
-  margin-bottom: 20px;
+  left: -500px;
+  top: 575px;
+`;
+
+
+export const TagMenuWrapper = styled.div`
+  @media (min-width: 1201px) {
+    display: none;
+  }
+
+  position: relative;
+  clear: both;
 `;
 
 export const TagMenu = styled.div`
@@ -215,10 +323,15 @@ export const TotalTag = styled(TagMenu)`
   background: #12b886;
 `;
 
+export const ResultText = styled.div`
+  margin-top: 20px;
+`;
+
 //// SERIES
 
 export const SeriesWrapper = styled.div`
   display: none;
+  clear: both;
 `;
 
 //// ABOUT
@@ -254,6 +367,7 @@ const AboutBtn = styled.button`
   margin-right: 10px;
   border-radius: 5px;
   border: none;
+  outline: none;
 
   &:hover {
     background: rgb(18, 184, 134, 0.7);
@@ -278,6 +392,8 @@ export const AboutWriteArea = styled.textarea`
   padding: 20px;
   clear: both;
   color: #343a40;
+
+  display: ${props => props.isSaveMode ? "block" : "none"};
   
   &::placeholder {
     color: rgb(134, 142, 155, 0.7);
@@ -287,20 +403,32 @@ export const AboutWriteArea = styled.textarea`
 
 export const AboutText = styled.div`
   font-size: 1.125rem;
+  padding: 20px;
+  width: 100%;
+  min-height: 170px;
+  clear: both;
+
+  display: ${props => !props.isSaveMode ? "block" : "none"};
 `;
 
 export const SaveBtn = styled(AboutBtn)`
   float: right;
+  margin-bottom: 20px;
 `;
 
 ///
 
 export const MainWrapper = styled.div`
+  @media (min-width: 769px) {
+    width: 800px;
+  }
+
   width: 100%;
   background: white;
   height: 100%;
   overflow-y: hidden;
   margin-bottom: 50px;
+  clear: both;
 
   ${props => {
     const selectedMenu = props.menu;
