@@ -3,8 +3,15 @@ import styled from "styled-components";
 import Tag from "components/Tag";
 
 const PostWrapper = styled.div`
+  @media (min-width: 769px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
   padding-top: 12px;
   padding-bottom: 32px;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 35px;
 `;
 
 const PostThumbNail = styled.img`
@@ -41,7 +48,8 @@ const SubInfoWrapper = styled.div`
   }
   display: flex;
   font-size: 0.75rem;
-  color: #868e96
+  color: #868e96;
+  margin-top: 10px;
 `;
 
 const PostDate = styled.div``;
@@ -52,16 +60,17 @@ const Separator = styled.div`
 const TotalComment = styled.div``;
 
 
-const Post = () => {
+const Post = ({ img_src, title, content }) => {
   return (
     <PostWrapper>
-      <PostThumbNail
-        src="https://media.vlpt.us/images/woo0_hooo/post/ce528f97-e8e4-4aa7-876a-e78d7b1f72e2/2CE11015-D1A5-4FFA-BB26-2B1A02A1020F.png?w=768"
-        alt="post thumb nail"
-      >
-      </PostThumbNail>
-      <PostTitle>Post Title</PostTitle>
-      <PostContent>Post Content</PostContent>
+      {img_src !== undefined && 
+        <PostThumbNail
+          src={img_src}
+          alt="post thumb nail"
+        >
+        </PostThumbNail>}
+      <PostTitle>{title}</PostTitle>
+      <PostContent>{content}</PostContent>
       <TagsWrapper>
         <PostTag
           value="tag1"
