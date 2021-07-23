@@ -6,6 +6,7 @@ const SearchPostWrapper = styled.div`
   @media (min-width: 769px) {
     margin-top: 60px;
   }
+  margin-top: 30px;
 `;
 
 const ProfileWrapper = styled.div`

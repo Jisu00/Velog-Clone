@@ -4,14 +4,13 @@ import Tag from "components/Tag";
 
 const PostWrapper = styled.div`
   @media (min-width: 769px) {
-    padding-top: 60px;
     padding-bottom: 60px;
+    margin-bottom: 48px;
   }
 
   padding-top: 12px;
   padding-bottom: 32px;
   border-bottom: 1px solid #e9ecef;
-  margin-bottom: 35px;
 `;
 
 const PostThumbNail = styled.img`

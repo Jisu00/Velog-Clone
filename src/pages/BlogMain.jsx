@@ -6,7 +6,8 @@ import facebookIcon from "assets/images/facebookIcon.svg";
 import homepageIcon from "assets/images/homepageIcon.svg";
 import mailIcon from "assets/images/mailIcon.svg";
 import searchIcon from "assets/images/searchIcon.svg";
-import Post from "components/Post"
+import Post from "components/Post";
+import Series from "components/Series";
 
 
 import {
@@ -38,6 +39,8 @@ import {
   MenuUnderline,
   TagListWrapper,
   TagListText,
+  TagList,
+  TagLink,
   TagMenuWrapper,
   TotalTag,
   TagMenu,
@@ -79,16 +82,16 @@ export default function BlogMain() {
   const [isWriteMode, setIsWriteMode] = useState(false);
   const [isSaveMode, setIsSaveMode] = useState(true);
   const [isSearchTyped, setIsSearchTyped] = useState(false);
-  
+
   const textArea = useRef();
   const searchInput = useRef();
 
   useEffect(()=>{
-    if (window.localStorage.text){
-      setText(window.localStorage.text);
+    if (window.localStorage.about_text){
+      setText(window.localStorage.about_text);
       setIsWriteMode(true);
       setIsSaveMode(false);
-      textArea.current.value = window.localStorage.text;
+      textArea.current.value = window.localStorage.about_text;
     }
     else {
       setIsWriteMode(false);
@@ -109,14 +112,14 @@ export default function BlogMain() {
 
     const typedText = textArea.current.value;
 
+    window.localStorage.setItem('about_text', typedText);
+
     if (typedText === ""){
       setIsWriteMode(false);
       setIsSaveMode(true);
     }
-    else {
+    else 
       setText(typedText);
-      window.localStorage.setItem('text', typedText);
-    }
   }
 
   const searchTitle = (e) => {
@@ -136,20 +139,21 @@ export default function BlogMain() {
     }
   }
 
-  const setNoResultText = (newPost) => {
-
-  }
-
   return (
     <>
       <GlobalStyle/>
       <PageWrapper>
         <HeaderWrapper><Header></Header></HeaderWrapper>
-        <FlexWrapper>
+        <FlexWrapper
+          menu={menu}
+        >
           <TagListWrapper
             menu={menu}
           >
             <TagListText>태그 목록</TagListText>
+            <TagList><TagLink href="#" style={{ color: "#20c997", fontWeight: 'bold'}}>전체 보기</TagLink> (2)</TagList>
+            <TagList><TagLink href="#">tag1</TagLink> (1)</TagList>
+            <TagList><TagLink href="#">tag2</TagLink> (1)</TagList>
             </TagListWrapper>
           <ProfileWrapper>
             <ProfileIcon
@@ -225,7 +229,26 @@ export default function BlogMain() {
                 (searchResult.length === 0 ? "" : searchResult)}
             </PostWrapper>
             <SeriesWrapper>
-              series
+              <Series
+                name="series1"
+                total_post="1"
+                last_update="방금 전"
+              ></Series>
+              <Series
+                name="series2"
+                total_post="2"
+                last_update="2일 전"
+              ></Series>
+              <Series
+                name="series3"
+                total_post="4"
+                last_update="4일 전"
+              ></Series>
+              <Series
+                name="series4"
+                total_post="2"
+                last_update="6일 전"
+              ></Series>
             </SeriesWrapper>
             <AboutWrapper>
               <AboutInitWrapper

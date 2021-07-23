@@ -37,6 +37,7 @@ export const PageWrapper = styled.div`
 export const FlexWrapper = styled.div`
   @media (min-width: 769px) {
     align-items: center;
+    margin-top: ${props => props.menu === "post" ? "-138px" : "0"};
   }
 
   display: flex;
@@ -229,7 +230,7 @@ export const SearchBorderWrapper = styled.div`
   }
 
   display: none;
-  margin: 20px 0;
+  margin-top: 20px;
   align-items: center;
   border: 1px solid black;
   height: 38px;
@@ -281,6 +282,9 @@ export const TagListWrapper = styled.div`
   }
 
   width: 184px;
+  position: relative;
+  left: -500px;
+  top: 678px;
   display: ${props => props.menu === "post" ? "block" : "none"};
 `;
 
@@ -290,9 +294,22 @@ export const TagListText = styled.div`
   font-weight: bold;
   padding: 10px 0;
   border-bottom: 1px solid #adb5bd;
-  position: relative;
-  left: -500px;
-  top: 575px;
+  margin-bottom: 10px;
+`;
+
+export const TagList = styled.div`
+  padding: 5px 0;
+  font-size: 14px;
+  color: #868e96;
+`;
+
+export const TagLink = styled.a`
+  text-decoration: none;
+  color: #343a40;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 
@@ -330,6 +347,11 @@ export const ResultText = styled.div`
 //// SERIES
 
 export const SeriesWrapper = styled.div`
+  @media (min-width: 769px) {
+    margin-top: 20px;
+  }
+
+  width: 100%;
   display: none;
   clear: both;
 `;
@@ -442,7 +464,7 @@ export const MainWrapper = styled.div`
     else if (selectedMenu === "series"){
       return (
         css`
-          ${SeriesWrapper} { display: block; }`
+          ${SeriesWrapper} { display: inline-block; }`
       )
     }
     else if (selectedMenu === "about"){

@@ -113,8 +113,7 @@ export const TotalPostText = styled.div`
   @media (min-width: 769px) {
     font-size: 18px;
   }
-
-  padding-bottom: 25px;
+  
   background: white;
   width: 100%;
   position: relative;
