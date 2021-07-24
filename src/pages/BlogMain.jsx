@@ -67,7 +67,6 @@ export default function BlogMain() {
   const [text, setText] = useState('');
   const [posts, setPosts] = useState([ // 임시로 초기화
     <Post
-      //img_src="https://media.vlpt.us/images/woo0_hooo/post/ce528f97-e8e4-4aa7-876a-e78d7b1f72e2/2CE11015-D1A5-4FFA-BB26-2B1A02A1020F.png?w=768"
       title="post1"
       content="content"
     ></Post>,
@@ -84,7 +83,6 @@ export default function BlogMain() {
   const [isSearchTyped, setIsSearchTyped] = useState(false);
 
   const textArea = useRef();
-  const searchInput = useRef();
 
   useEffect(()=>{
     if (window.localStorage.about_text){
@@ -122,10 +120,15 @@ export default function BlogMain() {
       setText(typedText);
   }
 
-  const searchTitle = (e) => {
+  const searchPost = (e) => {
     if (e.target.value === "") setIsSearchTyped(false);
     else {
-      const newPost = posts.filter(post => post.props.title === e.target.value);
+      const newPost = posts.filter(post => {
+        return (
+          (post.props.title.indexOf(e.target.value) !== -1) ||
+          (post.props.content.indexOf(e.target.value) !== -1)
+        )
+      });
 
       setIsSearchTyped(true);
       setSearchResult(newPost);
@@ -134,7 +137,7 @@ export default function BlogMain() {
         setSearchResultText("검색 결과가 없습니다.");
       }
       else{
-        setSearchResultText("총 " + newPost.length + "개의 포스트를 찾았습니다.");
+        setSearchResultText("총 <b>" + newPost.length + "</b>개의 포스트를 찾았습니다.");
       }
     }
   }
@@ -158,6 +161,7 @@ export default function BlogMain() {
           <ProfileWrapper>
             <ProfileIcon
               src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
+              onClick={()=>{setMenu("post")}}
               alt="profile icon"
             />
             <UserName>UserName</UserName>
@@ -215,8 +219,7 @@ export default function BlogMain() {
                   </SearchIcon>
                   <SearchInput
                     placeholder="검색어를 입력하세요"
-                    onKeyUp={searchTitle}
-                    ref={searchInput}
+                    onKeyUp={searchPost}
                   />
                 </SearchBorderWrapper>
               </SearchWrapper>
@@ -224,7 +227,7 @@ export default function BlogMain() {
                 <TotalTag>전체보기 (2)</TotalTag>
                 <TagMenu>tag1 (1)</TagMenu>
               </TagMenuWrapper>
-              {!isSearchTyped ? "" : <ResultText>{searchResultText}</ResultText>}
+              {!isSearchTyped ? "" : <ResultText dangerouslySetInnerHTML={{__html: searchResultText}}></ResultText>}
               {!isSearchTyped ? posts : 
                 (searchResult.length === 0 ? "" : searchResult)}
             </PostWrapper>

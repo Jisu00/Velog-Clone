@@ -29,11 +29,12 @@ const PreviewTitle = styled.div`
 const PreviewText = styled.div`
   margin: 20px 0px;
   font-size: 1.125rem;
+  line-height: 1.6;
 `;
 
 const Preview = ({ titleValue, inputValue }) => {
   const converter = new showdown.Converter();
-  const html = converter.makeHtml(inputValue);
+  let html = "<pre>" + converter.makeHtml(inputValue) + "</pre>"
 
   return (
     <PreviewWrapper>

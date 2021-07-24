@@ -31,7 +31,7 @@ const UserName = styled.div`
   font-size: 0.875rem;
 `;
 
-const SearchPost = () => {
+const SearchPost = ({ img_src, title, content }) => {
   return (
     <SearchPostWrapper>
       <ProfileWrapper>
@@ -41,7 +41,11 @@ const SearchPost = () => {
         />
         <UserName>UserName</UserName>
       </ProfileWrapper>
-      <Post></Post>
+      <Post
+        img_src={img_src}
+        title={title}
+        content={content}
+      ></Post>
     </SearchPostWrapper>
     
   )

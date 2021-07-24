@@ -18,6 +18,8 @@ const WriteArea = styled.textarea`
   padding: 0px 48px 48px 48px;
   resize: none;
   position: relative;
+  color: #343a40;
+  line-height: 1.4;
 
   &::placeholder {
     color: rgb(134, 142, 155, 0.7);

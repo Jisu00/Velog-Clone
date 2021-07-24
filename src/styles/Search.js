@@ -119,5 +119,3 @@ export const TotalPostText = styled.div`
   position: relative;
 `;
 
-export const SearchPostWrapper = styled.div``;
-

@@ -56,6 +56,7 @@ export default function Write() {
   const [alertColor, setAlertColor] = useState(null);
   
   const max_tag_id = useRef(0);
+  const input_file = useRef();
 
   useEffect(()=>{
     if (window.localStorage.title)
@@ -151,6 +152,10 @@ export default function Write() {
     setIsAlert(true);
   }
 
+  const imgFileOpen = () => {
+    input_file.current.click();
+  }
+
 
   return (
     <>
@@ -194,13 +199,23 @@ export default function Write() {
               <Header>H<HeaderNum>4</HeaderNum></Header>
             </HToolWrapper>
             <TextDecoWrapper>
-              <Bold><BoldImg src={boldIcon}></BoldImg></Bold>
-              <Italic><ItalicImg src={italicIcon}></ItalicImg></Italic>
-              <LineThrough><LineThroughImg src={lineThroughIcon}></LineThroughImg></LineThrough>
+              <Bold><BoldImg src={boldIcon}/></Bold>
+              <Italic><ItalicImg src={italicIcon}/></Italic>
+              <LineThrough><LineThroughImg src={lineThroughIcon}/></LineThrough>
             </TextDecoWrapper>
-            <Quotes><QuotesImg src={quotesIcon}></QuotesImg></Quotes>
-            <HyperLink><HyperLinkImg src={hyperLinkIcon}></HyperLinkImg></HyperLink>
-            <Images><ImagesImg src={imagesIcon}></ImagesImg></Images>
+            <Quotes><QuotesImg src={quotesIcon}/></Quotes>
+            <HyperLink><HyperLinkImg src={hyperLinkIcon}/></HyperLink>
+            <Images
+              onClick={imgFileOpen}  
+            >
+              <input 
+                type="file" 
+                id="getfile" 
+                accept="image/*"
+                style={{ display: "none" }}
+                ref={input_file}
+              />
+            <ImagesImg src={imagesIcon}/></Images>
             <Codes><CodesImg src={codesIcon}></CodesImg></Codes>
           </ToolBar>
         </WriteHeader>
