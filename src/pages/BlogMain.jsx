@@ -6,7 +6,8 @@ import facebookIcon from "assets/images/facebookIcon.svg";
 import homepageIcon from "assets/images/homepageIcon.svg";
 import mailIcon from "assets/images/mailIcon.svg";
 import searchIcon from "assets/images/searchIcon.svg";
-import Post from "components/Post"
+import Post from "components/Post";
+import Series from "components/Series";
 
 
 import {
@@ -38,6 +39,8 @@ import {
   MenuUnderline,
   TagListWrapper,
   TagListText,
+  TagList,
+  TagLink,
   TagMenuWrapper,
   TotalTag,
   TagMenu,
@@ -64,7 +67,6 @@ export default function BlogMain() {
   const [text, setText] = useState('');
   const [posts, setPosts] = useState([ // 임시로 초기화
     <Post
-      //img_src="https://media.vlpt.us/images/woo0_hooo/post/ce528f97-e8e4-4aa7-876a-e78d7b1f72e2/2CE11015-D1A5-4FFA-BB26-2B1A02A1020F.png?w=768"
       title="post1"
       content="content"
     ></Post>,
@@ -79,16 +81,15 @@ export default function BlogMain() {
   const [isWriteMode, setIsWriteMode] = useState(false);
   const [isSaveMode, setIsSaveMode] = useState(true);
   const [isSearchTyped, setIsSearchTyped] = useState(false);
-  
+
   const textArea = useRef();
-  const searchInput = useRef();
 
   useEffect(()=>{
-    if (window.localStorage.text){
-      setText(window.localStorage.text);
+    if (window.localStorage.about_text){
+      setText(window.localStorage.about_text);
       setIsWriteMode(true);
       setIsSaveMode(false);
-      textArea.current.value = window.localStorage.text;
+      textArea.current.value = window.localStorage.about_text;
     }
     else {
       setIsWriteMode(false);
@@ -109,20 +110,25 @@ export default function BlogMain() {
 
     const typedText = textArea.current.value;
 
+    window.localStorage.setItem('about_text', typedText);
+
     if (typedText === ""){
       setIsWriteMode(false);
       setIsSaveMode(true);
     }
-    else {
+    else 
       setText(typedText);
-      window.localStorage.setItem('text', typedText);
-    }
   }
 
-  const searchTitle = (e) => {
+  const searchPost = (e) => {
     if (e.target.value === "") setIsSearchTyped(false);
     else {
-      const newPost = posts.filter(post => post.props.title === e.target.value);
+      const newPost = posts.filter(post => {
+        return (
+          (post.props.title.indexOf(e.target.value) !== -1) ||
+          (post.props.content.indexOf(e.target.value) !== -1)
+        )
+      });
 
       setIsSearchTyped(true);
       setSearchResult(newPost);
@@ -131,13 +137,9 @@ export default function BlogMain() {
         setSearchResultText("검색 결과가 없습니다.");
       }
       else{
-        setSearchResultText("총 " + newPost.length + "개의 포스트를 찾았습니다.");
+        setSearchResultText("총 <b>" + newPost.length + "</b>개의 포스트를 찾았습니다.");
       }
     }
-  }
-
-  const setNoResultText = (newPost) => {
-
   }
 
   return (
@@ -145,15 +147,21 @@ export default function BlogMain() {
       <GlobalStyle/>
       <PageWrapper>
         <HeaderWrapper><Header></Header></HeaderWrapper>
-        <FlexWrapper>
+        <FlexWrapper
+          menu={menu}
+        >
           <TagListWrapper
             menu={menu}
           >
             <TagListText>태그 목록</TagListText>
+            <TagList><TagLink href="#" style={{ color: "#20c997", fontWeight: 'bold'}}>전체 보기</TagLink> (2)</TagList>
+            <TagList><TagLink href="#">tag1</TagLink> (1)</TagList>
+            <TagList><TagLink href="#">tag2</TagLink> (1)</TagList>
             </TagListWrapper>
           <ProfileWrapper>
             <ProfileIcon
               src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
+              onClick={()=>{setMenu("post")}}
               alt="profile icon"
             />
             <UserName>UserName</UserName>
@@ -211,8 +219,7 @@ export default function BlogMain() {
                   </SearchIcon>
                   <SearchInput
                     placeholder="검색어를 입력하세요"
-                    onKeyUp={searchTitle}
-                    ref={searchInput}
+                    onKeyUp={searchPost}
                   />
                 </SearchBorderWrapper>
               </SearchWrapper>
@@ -220,12 +227,31 @@ export default function BlogMain() {
                 <TotalTag>전체보기 (2)</TotalTag>
                 <TagMenu>tag1 (1)</TagMenu>
               </TagMenuWrapper>
-              {!isSearchTyped ? "" : <ResultText>{searchResultText}</ResultText>}
+              {!isSearchTyped ? "" : <ResultText dangerouslySetInnerHTML={{__html: searchResultText}}></ResultText>}
               {!isSearchTyped ? posts : 
                 (searchResult.length === 0 ? "" : searchResult)}
             </PostWrapper>
             <SeriesWrapper>
-              series
+              <Series
+                name="series1"
+                total_post="1"
+                last_update="방금 전"
+              ></Series>
+              <Series
+                name="series2"
+                total_post="2"
+                last_update="2일 전"
+              ></Series>
+              <Series
+                name="series3"
+                total_post="4"
+                last_update="4일 전"
+              ></Series>
+              <Series
+                name="series4"
+                total_post="2"
+                last_update="6일 전"
+              ></Series>
             </SeriesWrapper>
             <AboutWrapper>
               <AboutInitWrapper

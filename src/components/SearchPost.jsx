@@ -6,6 +6,7 @@ const SearchPostWrapper = styled.div`
   @media (min-width: 769px) {
     margin-top: 60px;
   }
+  margin-top: 30px;
 `;
 
 const ProfileWrapper = styled.div`
@@ -30,7 +31,7 @@ const UserName = styled.div`
   font-size: 0.875rem;
 `;
 
-const SearchPost = () => {
+const SearchPost = ({ img_src, title, content }) => {
   return (
     <SearchPostWrapper>
       <ProfileWrapper>
@@ -40,7 +41,11 @@ const SearchPost = () => {
         />
         <UserName>UserName</UserName>
       </ProfileWrapper>
-      <Post></Post>
+      <Post
+        img_src={img_src}
+        title={title}
+        content={content}
+      ></Post>
     </SearchPostWrapper>
     
   )
