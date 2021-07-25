@@ -157,7 +157,7 @@ export default function BlogMain() {
             <TagList><TagLink href="#" style={{ color: "#20c997", fontWeight: 'bold'}}>전체 보기</TagLink> (2)</TagList>
             <TagList><TagLink href="#">tag1</TagLink> (1)</TagList>
             <TagList><TagLink href="#">tag2</TagLink> (1)</TagList>
-            </TagListWrapper>
+          </TagListWrapper>
           <ProfileWrapper>
             <ProfileIcon
               src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
@@ -165,7 +165,7 @@ export default function BlogMain() {
               alt="profile icon"
             />
             <UserName>UserName</UserName>
-            <Intro>ㅎㅇ</Intro>
+            <Intro>Intro</Intro>
             <SocialInfoWrapper>
               <a 
                 href="https://www.github.com/"
