@@ -37,11 +37,11 @@ export const PageWrapper = styled.div`
 export const FlexWrapper = styled.div`
   @media (min-width: 769px) {
     align-items: center;
-    margin-top: ${props => props.menu === "post" ? "-138px" : "0"};
   }
 
   display: flex;
   height: 100%;
+  position: relative;
   flex-direction: column;
 `;
 
@@ -282,9 +282,9 @@ export const TagListWrapper = styled.div`
   }
 
   width: 184px;
-  position: relative;
-  left: -500px;
-  top: 678px;
+  position: absolute;
+  left: 160px;
+  top: 560px;
   display: ${props => props.menu === "post" ? "block" : "none"};
 `;
 
