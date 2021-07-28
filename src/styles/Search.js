@@ -30,7 +30,7 @@ export const PageWrapper = styled.div`
     padding: 0px 20px;
   }
   @media (min-width: 1025px) {
-    padding: 0px 80px;
+    padding: 0px 70px;
   }
 
   padding: 0px 20px;
@@ -117,5 +117,6 @@ export const TotalPostText = styled.div`
   background: white;
   width: 100%;
   position: relative;
+  color: #495057;
 `;
 

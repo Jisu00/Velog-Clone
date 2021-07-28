@@ -62,7 +62,7 @@ const TotalComment = styled.div``;
 const Post = ({ img_src, title, content }) => {
   return (
     <PostWrapper>
-      {img_src !== undefined && 
+      {img_src !== null && 
         <PostThumbNail
           src={img_src}
           alt="post thumb nail"

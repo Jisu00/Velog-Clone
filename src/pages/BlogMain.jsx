@@ -8,8 +8,6 @@ import mailIcon from "assets/images/mailIcon.svg";
 import searchIcon from "assets/images/searchIcon.svg";
 import Post from "components/Post";
 import Series from "components/Series";
-
-
 import {
   GlobalStyle,
   PageWrapper,
@@ -66,15 +64,16 @@ export default function BlogMain() {
   const [menu, setMenu] = useState("post");
   const [text, setText] = useState('');
   const [posts, setPosts] = useState([ // 임시로 초기화
-    <Post
-      title="post1"
-      content="content"
-    ></Post>,
-    <Post
-      img_src="https://media.vlpt.us/images/hwang-eunji/post/c4464eb3-c965-4a57-a31b-4a71f4fe41f5/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202020-03-10%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%203.02.16.png?w=768"
-      title="post2"
-      content="content"
-    ></Post>
+    { 
+      img_src: null,
+      title: "post1",
+      content: "content" 
+    },
+    { 
+      img_src: "https://media.vlpt.us/images/hwang-eunji/post/c4464eb3-c965-4a57-a31b-4a71f4fe41f5/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202020-03-10%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%203.02.16.png?w=768",
+      title: "post2",
+      content: "content" 
+    }
   ])
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultText, setSearchResultText] = useState('');
@@ -125,8 +124,8 @@ export default function BlogMain() {
     else {
       const newPost = posts.filter(post => {
         return (
-          (post.props.title.indexOf(e.target.value) !== -1) ||
-          (post.props.content.indexOf(e.target.value) !== -1)
+          (post.title.indexOf(e.target.value) !== -1) ||
+          (post.content.indexOf(e.target.value) !== -1)
         )
       });
 
@@ -146,7 +145,7 @@ export default function BlogMain() {
     <>
       <GlobalStyle/>
       <PageWrapper>
-        <HeaderWrapper><Header></Header></HeaderWrapper>
+        <HeaderWrapper><Header header_mode="blog"></Header></HeaderWrapper>
         <FlexWrapper
           menu={menu}
         >
@@ -228,8 +227,21 @@ export default function BlogMain() {
                 <TagMenu>tag1 (1)</TagMenu>
               </TagMenuWrapper>
               {!isSearchTyped ? "" : <ResultText dangerouslySetInnerHTML={{__html: searchResultText}}></ResultText>}
-              {!isSearchTyped ? posts : 
-                (searchResult.length === 0 ? "" : searchResult)}
+              {!isSearchTyped ? 
+                  posts.map(post => (
+                      <Post
+                        img_src={post.img_src}
+                        title={post.title}
+                        content={post.content}></Post>
+                  )) : 
+                (searchResult.length === 0 ? "" : 
+                  searchResult.map(post => (
+                    <Post
+                      img_src={post.img_src}
+                      title={post.title}
+                      content={post.content}></Post>
+                  ))
+                )}
             </PostWrapper>
             <SeriesWrapper>
               <Series

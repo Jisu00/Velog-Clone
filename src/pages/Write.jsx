@@ -3,6 +3,8 @@ import Editor from "components/Editor";
 import Preview from "components/Preview";
 import Alert from "components/Alert";
 import Tag from "components/Tag";
+import PublishPopup from "components/PublishPopup";
+
 import boldIcon from "assets/images/boldIcon.svg";
 import italicIcon from "assets/images/italicIcon.svg";
 import lineThroughIcon from "assets/images/lineThroughIcon.svg";
@@ -44,13 +46,15 @@ import {
   ExitBtn,
   ExitLink,
   SaveBtn,
-  PublishBtn
+  PublishBtn,
+  PublishPopupWrapper
 } from "styles/Write"
 
 export default function Write() {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [tags, setTag] = useState([]);
+  const [isPublishPopup, setIsPublishPopup] = useState(false);
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState(null);
   const [alertColor, setAlertColor] = useState(null);
@@ -103,6 +107,14 @@ export default function Write() {
       if (tags.length > 0) 
         deleteTag(tags[tags.length-1].props.id);
     }
+  }
+
+  const handleTagKeyUp = (e) => {
+    if (e.keyCode === 188) e.target.value = ""
+  }
+
+  const publishPopup = () => {
+    setIsPublishPopup(true);
   }
 
   const isExistValue = (inputText) => {
@@ -185,6 +197,7 @@ export default function Write() {
               type="text" 
               placeholder="태그를 입력하세요"
               onKeyDown={handleTagKeyDown}
+              onKeyUp={handleTagKeyUp}
             />
             <TagAlert>
               쉼표 혹은 엔터를 입력하여 태그를 등록할 수 있습니다.<br/>
@@ -215,7 +228,8 @@ export default function Write() {
                 style={{ display: "none" }}
                 ref={input_file}
               />
-            <ImagesImg src={imagesIcon}/></Images>
+              <ImagesImg src={imagesIcon}/>
+            </Images>
             <Codes><CodesImg src={codesIcon}></CodesImg></Codes>
           </ToolBar>
         </WriteHeader>
@@ -234,7 +248,9 @@ export default function Write() {
           >
             임시저장
           </SaveBtn>
-          <PublishBtn>출간하기</PublishBtn>
+          <PublishBtn
+            onClick={publishPopup}
+          >출간하기</PublishBtn>
         </WriteFooter>
       </WriteWrapper>
       <Preview 
@@ -242,6 +258,15 @@ export default function Write() {
         inputValue={text}
       ></Preview>
     </PageWrapper>
+
+    <PublishPopupWrapper>
+      <PublishPopup
+        isOpen={isPublishPopup}
+        setIsPublishPopup={setIsPublishPopup}
+        postTitle={title}
+        postContent={text}
+      ></PublishPopup>
+    </PublishPopupWrapper>
     </>
   );
 }

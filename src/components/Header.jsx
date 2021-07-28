@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginPopup from "components/LoginPopup";
 import logoIcon from "assets/images/logoIcon.svg";
 import searchIcon from "assets/images/searchIcon.svg";
@@ -27,16 +27,21 @@ import {
   WriteMenu,
   SavesMenu,
   LikedMenu,
+  SettingMenuLink,
   SettingMenu,
   LogoutMenu,
   PopupWrapper
 } from "styles/Header"
 
-export default function Header() {
+export default function Header({ header_mode }) {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [mode, setMode] = useState("blog");
+  const [mode, setMode] = useState("main");
+
+  useEffect(()=>{
+    setMode(header_mode);
+  }, []);
 
   const loginPopup = () => {
     setIsLoginPopup(true);
@@ -44,11 +49,6 @@ export default function Header() {
 
   const menuPopup = () => {
     isMenuPopup ? setIsMenuPopup(false) : setIsMenuPopup(true);
-  };
-
-  const toggleMode = () => {
-    mode === "main" ? setMode("blog") : setMode("main");
-    setIsMenuPopup(false);
   };
 
   const toggleLogin = () => {
@@ -74,13 +74,14 @@ export default function Header() {
           style={{ display: "flex", alignItems: "center" }}
         >
           <LogoIconLink to="/">
-            <LogoIcon style={mode === "main" ? {display:'none'}:{display:'block'}}
-              onClick={toggleMode}>
+            <LogoIcon 
+              style={mode === "main" ? {display:'none'} : {display:'block'}}
+            >
               <img src={logoIcon} alt="logo icon" />
             </LogoIcon>
           </LogoIconLink>
           <LogoTitleLink to={mode === "main" ? "/" : "/blog-main"}>
-            <LogoTitle onClick={toggleMode}>
+            <LogoTitle>
               {mode === "main" ? "velog" : "NAME.log"}
             </LogoTitle>
           </LogoTitleLink>
@@ -123,7 +124,9 @@ export default function Header() {
               <MenuLink to="/write"><WriteMenu>새 글 작성</WriteMenu></MenuLink>
               <SavesMenu>임시 글</SavesMenu>
               <LikedMenu>읽기 목록</LikedMenu>
-              <SettingMenu>설정</SettingMenu>
+              <SettingMenuLink to="/setting">
+                <SettingMenu>설정</SettingMenu>
+              </SettingMenuLink>
               <LogoutMenu onClick={toggleLogin}>로그아웃</LogoutMenu>
             </DropDownMenuWrapper>
           </MenuWrapper>
