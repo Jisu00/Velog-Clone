@@ -158,7 +158,11 @@ export const WriteMenu = styled(Menu)`
 `;
 export const SavesMenu = styled(Menu)``;
 export const LikedMenu = styled(Menu)``;
+
 export const SettingMenu = styled(Menu)``;
+
+export const SettingMenuLink = styled(MenuLink)``;
+
 export const LogoutMenu = styled(Menu)``;
 
 export const MenuWrapper = styled.div`

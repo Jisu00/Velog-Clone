@@ -266,3 +266,12 @@ export const PublishBtn = styled(FooterBtn)`
     background: rgb(18, 184, 134, 0.7);
   }
 `;
+
+export const PublishPopupWrapper = styled.div`
+  background: #f8f9fa;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+`;

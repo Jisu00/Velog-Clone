@@ -47,7 +47,7 @@ export const FlexWrapper = styled.div`
 
 export const HeaderWrapper = styled.div`
   @media (min-width: 769px) {
-    padding: 0px 74px;
+    padding: 0px 70px;
   }
 
   padding: 0px 20px;

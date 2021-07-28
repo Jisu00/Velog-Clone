@@ -10,7 +10,7 @@ const HomeWrapper = styled.div`
 export default function Home() {
   return (
     <HomeWrapper>
-      <Header></Header>
+      <Header header_mode="main"></Header>
       Home page
     </HomeWrapper>
   )

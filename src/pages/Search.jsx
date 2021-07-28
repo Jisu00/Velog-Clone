@@ -65,7 +65,7 @@ export default function Search() {
     <>
       <GlobalStyle />
       <PageWrapper>
-        <Header></Header>
+        <Header header_mode="main"></Header>
         <FlexWrapper>
           <MainWrapper>
             <SearchWrapper>
