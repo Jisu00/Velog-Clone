@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body, html {
@@ -26,6 +26,7 @@ export const PageWrapper = styled.div`
   height: 100%;
   background: white;
   color: #343a40;
+  margin-bottom: 60px;
 `;
 
 export const FlexWrapper = styled.div`
@@ -67,7 +68,6 @@ export const ProfileImg = styled.img`
   height: 90px;
   border-radius: 45px;
   box-shadow: 0px 0px 5px 0px lightgray;
-  cursor: pointer;
   margin: 10px;
 `;
 
@@ -104,7 +104,7 @@ export const ImgRemoveBtn = styled(ImgBtn)`
 
 ////
 
-const changeBtn = styled.div`
+const ChangeBtn = styled.div`
   width: 35px;
   font-size: 16px;
   color: rgb(18, 184, 134);
@@ -116,7 +116,7 @@ const changeBtn = styled.div`
   }
 `;
 
-const saveBtn = styled.button`
+const SaveBtn = styled.button`
   font-weight: bold;
   font-size: 16px;
   border-radius: 5px;
@@ -124,21 +124,80 @@ const saveBtn = styled.button`
   outline: none;
   padding: 5px 10px;
   cursor: pointer;
-  width: 70px;
   background: rgb(18, 184, 134);
   color: white;
+  height: 34px;
+  min-height: 34px;
+  width: 70px;
+  min-width: 70px;
 
   &:hover {
     background: rgb(18, 184, 134, 0.8);
   }
 `;
 
-////
+const Input = styled.input`
+  border: 1px solid #dee2e6;
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  width: 100%;
 
-export const ProfileWrapper= styled.div`
+  &:focus {
+    outline: none;
+    border: 1px solid #495057;
+  }
+`;
+
+const Text = styled.div`
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+`;
+
+const Desc = styled.div`
+  font-size: 14px;
+  color: #868e96;
+  margin-top: 8px;
+`;
+
+
+//// INFO
+
+
+export const ProfileWrapper = styled.div``;
+
+export const InfoSavedWrapper = styled.div``;
+
+export const InfoInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const InfoWrapper= styled.div`
   padding: 25px 0;
   border-bottom: 1px solid #e9ecef;
+
+  ${props => {
+    if (props.isSavedMode){
+      return (
+        css`
+          ${InfoSavedWrapper} { display: block; }
+          ${InfoInputWrapper} { display: none; }
+        `
+    )}
+    else {
+      return (
+        css`
+          ${InfoSavedWrapper} { display: none; }
+          ${InfoInputWrapper} { display: flex; }
+        `
+    )}
+  }}
 `;
+
+
 
 export const UserName = styled.div`
   @media (min-width: 769px) {
@@ -161,8 +220,116 @@ export const Intro = styled.div`
   margin-bottom: 12px;
 `;
 
-export const ProfileChangeBtn = styled(changeBtn)``;
+export const InfoChangeBtn = styled(ChangeBtn)``;
 
-export const ProfileSaveBtn = styled(saveBtn)``;
+export const UserNameInput = styled(Input)`
+  font-size: 1.125rem;
+  font-weight: bold;
+`;
 
-////
+export const IntroInput = styled(Input)`
+  font-size: 0.875rem;
+`;
+
+export const InfoSaveBtn = styled(SaveBtn)`
+  margin-left: auto;
+`;
+
+//// TITLE
+
+export const TitleSavedWrapper = styled.div``;
+
+export const TitleInputWrapper = styled.div`
+  align-items: center;
+`;
+
+export const TitleWrapper = styled.div`
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+
+  ${props => {
+    if (props.isSavedMode){
+      return (
+        css`
+          ${TitleSavedWrapper} { display: flex; }
+          ${TitleInputWrapper} { display: none; }
+        `
+    )}
+    else {
+      return (
+        css`
+          ${TitleSavedWrapper} { display: none; }
+          ${TitleInputWrapper} { display: flex; }
+        `
+    )}
+  }}
+`;
+
+export const TitleText = styled(Text)``;
+
+
+
+export const Title = styled.div`
+  font-size: 16px;
+  margin-right: auto;
+  margin-bottom: 12px;
+`;
+
+export const TitleChangeBtn = styled(ChangeBtn)``;
+
+export const TitleInput = styled(Input)`
+`;
+
+export const TitleSaveBtn = styled(SaveBtn)`
+  margin-bottom: 8px;
+  margin-left: 16px;
+`;
+
+export const TitleDesc = styled(Desc)``;
+
+//// SOCIAL
+
+export const SocialSavedWrapper = styled.div``;
+
+export const SocialInputWrapper = styled.div``;
+
+export const SocialWrapper = styled.div`
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+`;
+
+export const SocialText = styled(Text)``;
+
+export const SocialDesc = styled(Desc)``;
+
+//// EMAIL RECEIVE
+
+export const EmailReceiveWrapper = styled.div`
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+
+`;
+
+export const EmailReceiveText = styled(Text)``;
+
+//// MEMBERSHIP WITHDRAWAL
+
+export const WithdrawalWrapper = styled.div`
+  padding: 15px 0;
+`;
+
+export const WithdrawalText = styled(Text)``;
+
+export const WithdrawalBtn = styled(SaveBtn)`
+  width: 110px;
+  background: #ff6b6b;
+
+  &:hover {
+    background: #ff6b6b;
+    opacity: 0.8;
+  }
+`;
+
+export const WithdrawalDesc = styled(Desc)`
+  margin-top: 12px;
+`;
