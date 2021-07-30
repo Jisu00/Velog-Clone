@@ -110,7 +110,7 @@ export const SocialInfoWrapper = styled.div`
   padding: 10px 0px;
 `;
 
-export const SocialBtn = styled.button`
+const SocialBtn = styled.button`
   @media (min-width: 769px) {
     transform: scale(1.3);
     margin-right: 8px;
@@ -126,7 +126,7 @@ export const SocialBtn = styled.button`
   background: none;
 `;
 
-export const SocialImg = styled.img`
+const SocialImg = styled.img`
   filter: invert(77%) sepia(8%) saturate(279%) hue-rotate(169deg) brightness(92%) contrast(95%);
 
   &:hover {
