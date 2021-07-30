@@ -42,17 +42,36 @@ export const FlexWrapper = styled.div`
 
 export const HeaderWrapper = styled.div``;
 
+export const ProfileWrapper = styled.div`
+  @media (min-width: 769px) {
+    width: 768px;
+    padding: 30px 0px;
+  }
+`;
+
+/// MAIN
+
+export const MainInfoWrapper = styled.div`
+  @media (min-width: 769px) {
+    display: flex;
+    margin-bottom: 50px;
+  }
+`;
+
 //// PROFILE
 
 export const ProfileImgWrapper = styled.div`
   @media (min-width: 769px) {
+    width: 184px;
+    border-bottom: none;
+    border-right: 1px solid #e9ecef;
+    padding-right: 24px;
   }
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: 10px;
   padding-bottom: 25px;
   border-bottom: 1px solid #e9ecef;
 `;
@@ -136,13 +155,13 @@ const SaveBtn = styled.button`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   border: 1px solid #dee2e6;
   font-size: 1rem;
   padding: 8px;
   border-radius: 4px;
   margin-bottom: 8px;
-  width: 100%;
+  width: 96.3%;
 
   &:focus {
     outline: none;
@@ -165,9 +184,6 @@ const Desc = styled.div`
 
 //// INFO
 
-
-export const ProfileWrapper = styled.div``;
-
 export const InfoSavedWrapper = styled.div``;
 
 export const InfoInputWrapper = styled.div`
@@ -176,6 +192,12 @@ export const InfoInputWrapper = styled.div`
 `;
 
 export const InfoWrapper= styled.div`
+  @media (min-width: 769px) {
+    margin-left: 24px;
+    border-bottom: none;
+    width: 100%;
+  }
+
   padding: 25px 0;
   border-bottom: 1px solid #e9ecef;
 
@@ -202,7 +224,7 @@ export const InfoWrapper= styled.div`
 export const UserName = styled.div`
   @media (min-width: 769px) {
     margin-top: 30px;
-    font-size: 24px;
+    font-size: 36px;
   }
 
   font-weight: bold;
@@ -212,7 +234,7 @@ export const UserName = styled.div`
 
 export const Intro = styled.div`
   @media (min-width: 769px) {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   font-size: 14px;
@@ -223,17 +245,23 @@ export const Intro = styled.div`
 export const InfoChangeBtn = styled(ChangeBtn)``;
 
 export const UserNameInput = styled(Input)`
+  width: 100%;
   font-size: 1.125rem;
   font-weight: bold;
 `;
 
 export const IntroInput = styled(Input)`
+  width: 100%;
   font-size: 0.875rem;
 `;
 
 export const InfoSaveBtn = styled(SaveBtn)`
   margin-left: auto;
 `;
+
+/// SUB
+
+export const SubInfoWrapper = styled.div``;
 
 //// TITLE
 
@@ -289,16 +317,86 @@ export const TitleDesc = styled(Desc)``;
 
 //// SOCIAL
 
-export const SocialSavedWrapper = styled.div``;
+export const SocialSavedWrapper = styled.div`
+  align-items: center;
+`;
 
-export const SocialInputWrapper = styled.div``;
+export const SocialInputWrapper = styled.div`
+  flex-direction: column;
+`;
 
 export const SocialWrapper = styled.div`
   padding: 15px 0;
   border-bottom: 1px solid #e9ecef;
+
+  ${props => {
+    if (props.isSavedMode){
+      return (
+        css`
+          ${SocialSavedWrapper} { display: flex; }
+          ${SocialInputWrapper} { display: none; }
+        `
+    )}
+    else {
+      return (
+        css`
+          ${SocialSavedWrapper} { display: none; }
+          ${SocialInputWrapper} { display: flex; }
+        `
+    )}
+  }}
 `;
 
 export const SocialText = styled(Text)``;
+
+export const SocialAddrWrapper = styled.div``;
+
+const SocialIcon = styled.img`
+  filter: invert(20%) sepia(11%) saturate(562%) hue-rotate(169deg) brightness(94%) contrast(91%);
+  width: 16px;
+  margin-right: 10px;
+  vertical-align: middle;
+`;
+
+export const MailWrapper = styled.div``;
+export const GithubWrapper = styled.div``;
+export const TwitterWrapper = styled.div``;
+export const FacebookWrapper = styled.div``;
+export const HomepageWrapper = styled.div``;
+
+export const MailIcon = styled(SocialIcon)``;
+export const GithubIcon = styled(SocialIcon)``;
+export const TwitterIcon = styled(SocialIcon)``;
+export const FacebookIcon = styled(SocialIcon)``;
+export const HomepageIcon = styled(SocialIcon)``;
+
+const Social = styled.div`
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 12px;
+`;
+
+export const Mail = styled(Social)``;
+export const Github = styled(Social)``;
+export const Twitter = styled(Social)``;
+export const Facebook = styled(Social)``;
+export const Homepage = styled(Social)``;
+
+export const SocialChangeBtn = styled(ChangeBtn)`
+  margin-left: ${props => !props.isSocialNothing ? "auto" : ""};
+  width: ${props => props.isSocialNothing ? "85px" : ""};
+`;
+
+export const MailInputWrapper = styled.div``;
+export const GithubInputWrapper = styled.div``;
+export const TwitterInputWrapper = styled.div``;
+export const FacebookInputWrapper = styled.div``;
+export const HomepageInputWrapper = styled.div``;
+
+export const SocialSaveBtn = styled(SaveBtn)`
+  margin-top: 16px;
+  margin-left: auto;
+`;
 
 export const SocialDesc = styled(Desc)``;
 
@@ -310,7 +408,82 @@ export const EmailReceiveWrapper = styled.div`
 
 `;
 
+const ToggleFill = styled.div`
+  background: #e9ecef;
+  width: 50px;
+  height: 26px;
+  border-radius: 26px;
+`;
+
+const ToggleSwitch = styled.div`
+  background: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.3s;
+`;
+
 export const EmailReceiveText = styled(Text)``;
+
+export const CommentAlertWrapper = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+`;
+
+export const CommentAlertText = styled.div`
+  width: 230px;
+`;
+
+export const CommentToggleFill = styled(ToggleFill)``;
+
+export const CommentToggleSwitch = styled(ToggleSwitch)``;
+
+export const CommentAlertToggleWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+
+  ${props => {
+    if (props.isAlert){
+      return (
+        css` 
+          ${CommentToggleFill} { background: #20c997; }
+          ${CommentToggleSwitch} { left: 27px; }
+        `
+    )}
+  }}
+`;
+
+//
+
+export const UpdateNewsWrapper = styled.div`
+  display: flex;
+`;
+
+export const UpdateNewsText = styled.div`
+  width: 230px;
+`;
+
+export const UpdateToggleFill = styled(ToggleFill)``;
+
+export const UpdateToggleSwitch = styled(ToggleSwitch)``;
+
+export const UpdateNewsToggleWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+
+  ${props => {
+    if (props.isAlert){
+      return (
+        css` 
+          ${UpdateToggleFill} { background: #20c997; }
+          ${UpdateToggleSwitch} { left: 27px; }
+        `
+    )}
+  }}
+`;
 
 //// MEMBERSHIP WITHDRAWAL
 
@@ -333,3 +506,5 @@ export const WithdrawalBtn = styled(SaveBtn)`
 export const WithdrawalDesc = styled(Desc)`
   margin-top: 12px;
 `;
+
+export const WithdrawalPopupWrapper = styled.div``;

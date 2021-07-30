@@ -110,6 +110,7 @@ const LoginButton = styled.button`
   border: none;
   height: 53px;
   width: 96px;
+  cursor: pointer;
 `;
 
 const SocialArea = styled.div`
@@ -124,6 +125,7 @@ const SocialButtonArea = styled.div`
 const IconButton = styled.button`
   background: transparent;
   border: none;
+  cursor: pointer;
 `;
 
 const FooterAreaWrapper = styled.div`
@@ -140,6 +142,7 @@ const IsMemberText = styled.span`
 const MemberLink = styled.a`
   color: rgb(18, 184, 134);
   font-weight: bold;
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }

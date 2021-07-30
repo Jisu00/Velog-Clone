@@ -1,16 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import Header from "components/Header";
+import WithdrawalPopup from "components/WithdrawalPopup";
+
+import githubIcon from "assets/images/githubIcon2.svg";
+import twitterIcon from "assets/images/twitterIcon.svg";
+import facebookIcon from "assets/images/facebookIcon.svg";
+import homepageIcon from "assets/images/homepageIcon.svg";
+import mailIcon from "assets/images/mailIcon.svg";
+
 import {
   GlobalStyle,
   PageWrapper,
   HeaderWrapper,
   FlexWrapper,
+  ProfileWrapper,
+  MainInfoWrapper,
+  SubInfoWrapper,
   ProfileImgWrapper,
   ProfileImg,
   ImgUploadBtn,
   ImgRemoveBtn,
-  ProfileWrapper,
   InfoWrapper,
   InfoSavedWrapper,
   UserName,
@@ -32,25 +42,86 @@ import {
   SocialWrapper,
   SocialText,
   SocialSavedWrapper,
+  SocialAddrWrapper,
+  MailWrapper,
+  MailIcon,
+  Mail,
+  GithubWrapper,
+  GithubIcon,
+  Github,
+  TwitterWrapper,
+  TwitterIcon,
+  Twitter,
+  FacebookWrapper,
+  FacebookIcon,
+  Facebook,
+  HomepageWrapper,
+  HomepageIcon,
+  Homepage,
+  SocialChangeBtn,
+  Input,
   SocialInputWrapper,
+  MailInputWrapper,
+  GithubInputWrapper,
+  TwitterInputWrapper,
+  FacebookInputWrapper,
+  HomepageInputWrapper,
+  SocialSaveBtn,
   SocialDesc,
   EmailReceiveWrapper,
   EmailReceiveText,
+  CommentAlertWrapper,
+  CommentAlertText,
+  CommentAlertToggleWrapper,
+  CommentToggleFill,
+  CommentToggleSwitch,
+  UpdateNewsWrapper,
+  UpdateNewsText,
+  UpdateNewsToggleWrapper,
+  UpdateToggleFill,
+  UpdateToggleSwitch,
   WithdrawalWrapper,
   WithdrawalText,
   WithdrawalBtn,
-  WithdrawalDesc
+  WithdrawalDesc,
+  WithdrawalPopupWrapper
 } from "styles/Setting"
 
 export default function Setting() {
   const [isInfoSavedMode, setIsInfoSavedMode] = useState(true);
   const [isTitleSavedMode, setIsTitleSavedMode] = useState(true);
+  const [isSocialSavedMode, setIsSocialSavedMode] = useState(true);
+  const [isSocialNothing, setIsSocialNothing] = useState(true);
+  const [isCommentAlert, setIsCommentAlert] = useState(false);
+  const [isUpdateAlert, setIsUpdateAlert] = useState(false);
+  const [isWithdrawalPopup, setIsWithdrawalPopup] = useState(false);
+  
   const [userName, setUserName] = useState("UserName");
   const [intro, setIntro] = useState("Intro");
   const [title, setTitle] = useState("Title");
+  const [mail, setMail] = useState("");
+  const [github, setGithub] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [homepage, setHomepage] = useState("");
 
   const profile_img = useRef();
   const img_input = useRef();
+
+  useEffect(()=>{
+    if (mail === "" && github === "" && twitter === "" && facebook === "" && homepage === "")
+      setIsSocialNothing(true);
+    else
+      setIsSocialNothing(false);
+  }, [mail, github, twitter, facebook, homepage]);
+
+  const toggleCommentAlert = () => {
+    isCommentAlert ? setIsCommentAlert(false) : setIsCommentAlert(true);
+  }
+
+  const toggleUpdateAlert = () => {
+    isUpdateAlert ? setIsUpdateAlert(false) : setIsUpdateAlert(true);
+  }
 
   const onSaveSubmit = (e, setIsSavedMode) => {
     if (!(e.keyCode === 13 || e.type === "click")) return;
@@ -95,120 +166,237 @@ export default function Setting() {
       <PageWrapper>
         <HeaderWrapper><Header header_mode="main"></Header></HeaderWrapper>
         <FlexWrapper>
-          <ProfileImgWrapper>
-            <ProfileImg
-              src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
-              ref={profile_img}
-            />
-            <ImgUploadBtn
-              onClick={onImgUploadBtnClick}
-            >
-              <input 
-                type="file"
-                id="profileImg"
-                accept="image/*"
-                ref={img_input}
-                onChange={onImgChange}
-                style={{ display: "none" }}
-              />
-              이미지 업로드
-            </ImgUploadBtn>
-            <ImgRemoveBtn
-              onClick={onImgRemove}
-            >이미지 제거</ImgRemoveBtn>
-          </ProfileImgWrapper>
           <ProfileWrapper>
-            <InfoWrapper
-              isSavedMode={isInfoSavedMode}
-            >
-              <InfoSavedWrapper>
-                <UserName>{userName}</UserName>
-                <Intro>{intro}</Intro>
-                <InfoChangeBtn
-                  onClick={()=>{setIsInfoSavedMode(false)}}
-                >수정</InfoChangeBtn>
-              </InfoSavedWrapper>
-              <InfoInputWrapper>
-                <UserNameInput
-                  placeholder="이름"
-                  onKeyDown={(e)=>{
-                    userName !== "" && 
-                    onSaveSubmit(e, setIsInfoSavedMode)
-                  }}
-                  onChange={(e)=>{setUserName(e.target.value)}}
-                  value={userName}
+            <MainInfoWrapper>
+              <ProfileImgWrapper>
+                <ProfileImg
+                  src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
+                  ref={profile_img}
                 />
-                <IntroInput
-                  placeholder="한 줄 소개"
-                  onKeyDown={(e)=>{
-                    userName !== "" &&
-                    onSaveSubmit(e, setIsInfoSavedMode)
-                  }}
-                  onChange={(e)=>{setIntro(e.target.value)}}
-                  value={intro}
-                />
-                <InfoSaveBtn
-                  onClick={(e)=>{
-                    userName !== "" &&
-                    onSaveSubmit(e, setIsInfoSavedMode)
-                  }}
+                <ImgUploadBtn
+                  onClick={onImgUploadBtnClick}
                 >
-                  저장
-                </InfoSaveBtn>
-              </InfoInputWrapper>
-            </InfoWrapper>
-            <TitleWrapper
-              isSavedMode={isTitleSavedMode}
-            >
-              <TitleText>벨로그 제목</TitleText>
-              <TitleSavedWrapper>
-                <Title>{title}</Title>
-                <TitleChangeBtn
-                  onClick={()=>{setIsTitleSavedMode(false)}}
-                >수정</TitleChangeBtn>
-              </TitleSavedWrapper>
-              <TitleInputWrapper>
-                <TitleInput
-                   placeholder=""
-                   onKeyDown={(e)=>{
-                     title !== "" &&
-                     onSaveSubmit(e, setIsTitleSavedMode)
-                   }}
-                   onChange={(e)=>{setTitle(e.target.value)}}
-                   value={title}
-                />
-                <TitleSaveBtn
-                  onClick={(e)=>{
-                    title !== "" &&
-                    onSaveSubmit(e, setIsTitleSavedMode)
-                  }}
-                >
-                  저장
-                </TitleSaveBtn>
-              </TitleInputWrapper>
-              <TitleDesc>개인 페이지의 좌측 상단에 나타나는 페이지 제목입니다.</TitleDesc>
-            </TitleWrapper>
-            <SocialWrapper>
-              <SocialText>소셜 정보</SocialText>
-              <SocialSavedWrapper>
-
-              </SocialSavedWrapper>
-              <SocialInputWrapper>
-
-              </SocialInputWrapper>
-              <SocialDesc>포스트 및 블로그에서 보여지는 프로필에 공개되는 소셜 정보입니다.</SocialDesc>
-            </SocialWrapper>
-            <EmailReceiveWrapper>
-              <EmailReceiveText>이메일 수신 설정</EmailReceiveText>
-            </EmailReceiveWrapper>
-            <WithdrawalWrapper>
-              <WithdrawalText>회원 탈퇴</WithdrawalText>
-              <WithdrawalBtn>회원 탈퇴</WithdrawalBtn>
-              <WithdrawalDesc>탈퇴 시 작성하신 포스트 및 댓글이 모두 삭제되며 복구되지 않습니다.</WithdrawalDesc>
-            </WithdrawalWrapper>
+                  <input 
+                    type="file"
+                    id="profileImg"
+                    accept="image/*"
+                    ref={img_input}
+                    onChange={onImgChange}
+                    style={{ display: "none" }}
+                  />
+                  이미지 업로드
+                </ImgUploadBtn>
+                <ImgRemoveBtn
+                  onClick={onImgRemove}
+                >이미지 제거</ImgRemoveBtn>
+              </ProfileImgWrapper>
+              <InfoWrapper
+                isSavedMode={isInfoSavedMode}
+              >
+                <InfoSavedWrapper>
+                  <UserName>{userName}</UserName>
+                  <Intro>{intro}</Intro>
+                  <InfoChangeBtn
+                    onClick={()=>{setIsInfoSavedMode(false)}}
+                  >수정</InfoChangeBtn>
+                </InfoSavedWrapper>
+                <InfoInputWrapper>
+                  <UserNameInput
+                    placeholder="이름"
+                    onKeyDown={(e)=>{
+                      userName !== "" && 
+                      onSaveSubmit(e, setIsInfoSavedMode)
+                    }}
+                    onChange={(e)=>{setUserName(e.target.value)}}
+                    value={userName}
+                  />
+                  <IntroInput
+                    placeholder="한 줄 소개"
+                    onKeyDown={(e)=>{
+                      userName !== "" &&
+                      onSaveSubmit(e, setIsInfoSavedMode)
+                    }}
+                    onChange={(e)=>{setIntro(e.target.value)}}
+                    value={intro}
+                  />
+                  <InfoSaveBtn
+                    onClick={(e)=>{
+                      userName !== "" &&
+                      onSaveSubmit(e, setIsInfoSavedMode)
+                    }}
+                  >
+                    저장
+                  </InfoSaveBtn>
+                </InfoInputWrapper>
+              </InfoWrapper>
+            </MainInfoWrapper>
+            <SubInfoWrapper>
+              <TitleWrapper
+                isSavedMode={isTitleSavedMode}
+              >
+                <TitleText>벨로그 제목</TitleText>
+                <TitleSavedWrapper>
+                  <Title>{title}</Title>
+                  <TitleChangeBtn
+                    onClick={()=>{setIsTitleSavedMode(false)}}
+                  >수정</TitleChangeBtn>
+                </TitleSavedWrapper>
+                <TitleInputWrapper>
+                  <TitleInput
+                    placeholder="벨로그 제목"
+                    onKeyDown={(e)=>{
+                      title !== "" &&
+                      onSaveSubmit(e, setIsTitleSavedMode)
+                    }}
+                    onChange={(e)=>{setTitle(e.target.value)}}
+                    value={title}
+                  />
+                  <TitleSaveBtn
+                    onClick={(e)=>{
+                      title !== "" &&
+                      onSaveSubmit(e, setIsTitleSavedMode)
+                    }}
+                  >
+                    저장
+                  </TitleSaveBtn>
+                </TitleInputWrapper>
+                <TitleDesc>개인 페이지의 좌측 상단에 나타나는 페이지 제목입니다.</TitleDesc>
+              </TitleWrapper>
+              <SocialWrapper
+                isSavedMode={isSocialSavedMode}
+              >
+                <SocialText>소셜 정보</SocialText>
+                <SocialSavedWrapper>
+                  <SocialAddrWrapper>
+                    { mail !== "" && 
+                    <MailWrapper>
+                      <MailIcon src={mailIcon}/>
+                      <Mail>{mail}</Mail>
+                    </MailWrapper>}
+                    { github !== "" &&
+                    <GithubWrapper>
+                      <GithubIcon src={githubIcon}/>
+                      <Github>{github}</Github>
+                    </GithubWrapper>}
+                    { twitter !== "" && 
+                    <TwitterWrapper>
+                      <TwitterIcon src={twitterIcon}/>
+                      <Twitter>{twitter}</Twitter>
+                    </TwitterWrapper>}
+                    { facebook !== "" && 
+                    <FacebookWrapper>
+                      <FacebookIcon src={facebookIcon}/>
+                      <Facebook>{facebook}</Facebook>
+                    </FacebookWrapper>}
+                    { homepage !== "" &&
+                    <HomepageWrapper>
+                      <HomepageIcon src={homepageIcon}/>
+                      <Homepage>{homepage}</Homepage>
+                    </HomepageWrapper>}
+                  </SocialAddrWrapper>
+                  <SocialChangeBtn
+                    onClick={()=>{setIsSocialSavedMode(false)}}
+                    isSocialNothing={isSocialNothing}
+                  >
+                    { isSocialNothing ? "정보 추가" : "수정" }
+                  </SocialChangeBtn>
+                </SocialSavedWrapper>
+                <SocialInputWrapper>
+                  <MailInputWrapper>
+                    <MailIcon src={mailIcon}/>
+                    <Input
+                      placeholder="이메일을 입력하세요."
+                      onKeyDown={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                      onChange={(e)=>{setMail(e.target.value)}}
+                      value={mail}
+                    />
+                  </MailInputWrapper>
+                  <GithubInputWrapper>
+                    <GithubIcon src={githubIcon}/>
+                    <Input
+                      placeholder="Github 계정을 입력하세요."
+                      onKeyDown={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                      onChange={(e)=>{setGithub(e.target.value)}}
+                      value={github}
+                    />
+                  </GithubInputWrapper>
+                  <TwitterInputWrapper>
+                    <TwitterIcon src={twitterIcon}/>
+                    <Input
+                      placeholder="Twitter 계정을 입력하세요."
+                      onKeyDown={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                      onChange={(e)=>{setTwitter(e.target.value)}}
+                      value={twitter}
+                    />
+                  </TwitterInputWrapper>
+                  <FacebookInputWrapper>
+                    <FacebookIcon src={facebookIcon}/>
+                    <Input
+                      placeholder = "Facebook 계정을 입력하세요."
+                      onKeyDown={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                      onChange={(e)=>{setFacebook(e.target.value)}}
+                      value={facebook}
+                    />
+                  </FacebookInputWrapper>
+                  <HomepageInputWrapper>
+                    <HomepageIcon src={homepageIcon}/>
+                    <Input
+                      placeholder="홈페이지 주소를 입력하세요."
+                      onKeyDown={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                      onChange={(e)=>{setHomepage(e.target.value)}}
+                      value={homepage}
+                    />
+                  </HomepageInputWrapper>
+                  <SocialSaveBtn
+                    onClick={(e)=>{onSaveSubmit(e, setIsSocialSavedMode)}}
+                  >
+                    저장
+                  </SocialSaveBtn>
+                </SocialInputWrapper>
+                <SocialDesc>포스트 및 블로그에서 보여지는 프로필에 공개되는 소셜 정보입니다.</SocialDesc>
+              </SocialWrapper>
+              <EmailReceiveWrapper>
+                <EmailReceiveText>이메일 수신 설정</EmailReceiveText>
+                <CommentAlertWrapper>
+                  <CommentAlertText>댓글 알림</CommentAlertText>
+                  <CommentAlertToggleWrapper
+                    onClick={toggleCommentAlert}
+                    isAlert={isCommentAlert}
+                  >
+                    <CommentToggleFill></CommentToggleFill>
+                    <CommentToggleSwitch></CommentToggleSwitch>
+                  </CommentAlertToggleWrapper>
+                </CommentAlertWrapper>
+                <UpdateNewsWrapper>
+                  <UpdateNewsText>벨로그 업데이트 소식</UpdateNewsText>
+                  <UpdateNewsToggleWrapper
+                    onClick={toggleUpdateAlert}
+                    isAlert={isUpdateAlert}
+                  >
+                    <UpdateToggleFill></UpdateToggleFill>
+                    <UpdateToggleSwitch></UpdateToggleSwitch>
+                  </UpdateNewsToggleWrapper>
+                </UpdateNewsWrapper>
+              </EmailReceiveWrapper>
+              <WithdrawalWrapper>
+                <WithdrawalText>회원 탈퇴</WithdrawalText>
+                <WithdrawalBtn
+                  onClick={()=>{setIsWithdrawalPopup(true)}}
+                >회원 탈퇴</WithdrawalBtn>
+                <WithdrawalDesc>탈퇴 시 작성하신 포스트 및 댓글이 모두 삭제되며 복구되지 않습니다.</WithdrawalDesc>
+              </WithdrawalWrapper>
+            </SubInfoWrapper>
           </ProfileWrapper>
         </FlexWrapper>
       </PageWrapper>
+
+      <WithdrawalPopupWrapper>
+        <WithdrawalPopup
+          isOpen={isWithdrawalPopup}
+          setIsWithdrawalPopup={setIsWithdrawalPopup}
+        >
+        </WithdrawalPopup>
+      </WithdrawalPopupWrapper>
     </>
   );
 }
