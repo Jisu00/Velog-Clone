@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
 import styled, { keyframes } from "styled-components";
 
 //// animation
@@ -15,16 +14,6 @@ export const fadeOut = keyframes`
 `;
 
 ////
-
-export const GlobalStyle = createGlobalStyle`
-  body, html {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-`;
 
 export const PageWrapper = styled.div`
   width: 100%;

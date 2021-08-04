@@ -5,13 +5,13 @@ const PopupPageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed;
+  z-index: 1
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   background-color: rgba(249, 249, 249, 0.85);
 `;
 

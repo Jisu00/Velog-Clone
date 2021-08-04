@@ -1,18 +1,4 @@
-import styled from "styled-components";
-import { createGlobalStyle, css } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-  body, html {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    background: white;
-  }
-`;
-
-////
+import styled, { css } from "styled-components";
 
 export const PageWrapper = styled.div`
   @media (max-width: 1024px) {
@@ -39,8 +25,6 @@ export const FlexWrapper = styled.div`
   position: relative;
   flex-direction: column;
 `;
-
-export const HeaderWrapper = styled.div``;
 
 export const ProfileWrapper = styled.div`
   @media (min-width: 769px) {
@@ -446,7 +430,7 @@ export const CommentAlertToggleWrapper = styled.div`
   cursor: pointer;
 
   ${props => {
-    if (props.isAlert){
+    if (props.isAlert === true){
       return (
         css` 
           ${CommentToggleFill} { background: #20c997; }
@@ -475,7 +459,7 @@ export const UpdateNewsToggleWrapper = styled.div`
   cursor: pointer;
 
   ${props => {
-    if (props.isAlert){
+    if (props.isAlert === true){
       return (
         css` 
           ${UpdateToggleFill} { background: #20c997; }

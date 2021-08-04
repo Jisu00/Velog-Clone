@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Header from "components/Header";
+import GlobalStyles from "styles/GlobalStyles";
+
 import SearchPost from "components/SearchPost";
 import searchIcon from "assets/images/searchIcon.svg";
 import {
-  GlobalStyle,
   PageWrapper,
   FlexWrapper,
   MainWrapper,
@@ -63,7 +64,7 @@ export default function Search() {
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyles />
       <PageWrapper>
         <Header header_mode="main"></Header>
         <FlexWrapper>

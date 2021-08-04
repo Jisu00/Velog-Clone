@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import Header from "components/Header";
 import WithdrawalPopup from "components/WithdrawalPopup";
+import GlobalStyles from "styles/GlobalStyles";
 
 import githubIcon from "assets/images/githubIcon2.svg";
 import twitterIcon from "assets/images/twitterIcon.svg";
@@ -10,9 +11,7 @@ import homepageIcon from "assets/images/homepageIcon.svg";
 import mailIcon from "assets/images/mailIcon.svg";
 
 import {
-  GlobalStyle,
   PageWrapper,
-  HeaderWrapper,
   FlexWrapper,
   ProfileWrapper,
   MainInfoWrapper,
@@ -96,9 +95,9 @@ export default function Setting() {
   const [isUpdateAlert, setIsUpdateAlert] = useState(false);
   const [isWithdrawalPopup, setIsWithdrawalPopup] = useState(false);
   
-  const [userName, setUserName] = useState("UserName");
-  const [intro, setIntro] = useState("Intro");
-  const [title, setTitle] = useState("Title");
+  const [userName, setUserName] = useState("userName");
+  const [intro, setIntro] = useState("");
+  const [title, setTitle] = useState("userName.log");
   const [mail, setMail] = useState("");
   const [github, setGithub] = useState("");
   const [twitter, setTwitter] = useState("");
@@ -109,11 +108,41 @@ export default function Setting() {
   const img_input = useRef();
 
   useEffect(()=>{
+    // load data
+    
+    if (window.localStorage.user_name)
+      setUserName(window.localStorage.user_name);
+    if (window.localStorage.intro)
+      setIntro(window.localStorage.intro);
+    if (window.localStorage.blog_title)
+      setTitle(window.localStorage.blog_title);
+    if (window.localStorage.mail)
+      setMail(window.localStorage.mail);
+    if (window.localStorage.github)
+      setGithub(window.localStorage.github);
+    if (window.localStorage.twitter)
+      setTwitter(window.localStorage.twitter);
+    if (window.localStorage.facebook)
+      setFacebook(window.localStorage.facebook);
+    if (window.localStorage.homepage)
+      setHomepage(window.localStorage.homepage);
+    if (window.localStorage.comment_alert)
+      setIsCommentAlert(window.localStorage.comment_alert);
+    if (window.localStorage.update_alert)
+      setIsUpdateAlert(window.localStorage.update_alert);
+  }, []);
+
+  useEffect(()=>{
     if (mail === "" && github === "" && twitter === "" && facebook === "" && homepage === "")
       setIsSocialNothing(true);
     else
       setIsSocialNothing(false);
   }, [mail, github, twitter, facebook, homepage]);
+
+  useEffect(()=>{
+    window.localStorage.setItem("comment_alert", isCommentAlert);
+    window.localStorage.setItem("update_alert", isUpdateAlert);
+  }, [isCommentAlert, isUpdateAlert]);
 
   const toggleCommentAlert = () => {
     isCommentAlert ? setIsCommentAlert(false) : setIsCommentAlert(true);
@@ -127,13 +156,26 @@ export default function Setting() {
     if (!(e.keyCode === 13 || e.type === "click")) return;
     
     setIsSavedMode(true);
+    onDataChange();
   }
 
   const onImgUploadBtnClick = () => {
     img_input.current.click();
   }
 
-  const onImgChange = async (e) => {
+  const onDataChange = () => {
+    window.localStorage.setItem("user_name", userName);
+    window.localStorage.setItem("intro", intro);
+    window.localStorage.setItem("blog_title", title);
+    window.localStorage.setItem("mail", mail);
+    window.localStorage.setItem("github", github);
+    window.localStorage.setItem("twitter", twitter);
+    window.localStorage.setItem("facebook", facebook);
+    window.localStorage.setItem("homepage", homepage);
+  }
+  
+
+  /*const onImgChange = async (e) => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     
@@ -148,23 +190,13 @@ export default function Setting() {
     //const res = await axios.post('', formData);
     profile_img.props.src = "";
   }
-
-  const onDataChange = async () => {
-    try {
-      const res = await axios.put('',
-      );
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  
+*/
 
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyles/>
       <PageWrapper>
-        <HeaderWrapper><Header header_mode="main"></Header></HeaderWrapper>
+        <Header header_mode="main"></Header>
         <FlexWrapper>
           <ProfileWrapper>
             <MainInfoWrapper>
@@ -181,13 +213,13 @@ export default function Setting() {
                     id="profileImg"
                     accept="image/*"
                     ref={img_input}
-                    onChange={onImgChange}
+                    //onChange={onImgChange}
                     style={{ display: "none" }}
                   />
                   이미지 업로드
                 </ImgUploadBtn>
                 <ImgRemoveBtn
-                  onClick={onImgRemove}
+                  //onClick={onImgRemove}
                 >이미지 제거</ImgRemoveBtn>
               </ProfileImgWrapper>
               <InfoWrapper

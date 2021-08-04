@@ -4,6 +4,7 @@ import Preview from "components/Preview";
 import Alert from "components/Alert";
 import Tag from "components/Tag";
 import PublishPopup from "components/PublishPopup";
+import GlobalStyles from "styles/GlobalStyles";
 
 import boldIcon from "assets/images/boldIcon.svg";
 import italicIcon from "assets/images/italicIcon.svg";
@@ -13,7 +14,6 @@ import hyperLinkIcon from "assets/images/hyperLinkIcon.svg";
 import imagesIcon from "assets/images/imagesIcon.svg";
 import codesIcon from "assets/images/codesIcon.svg";
 import {
-  GlobalStyle,
   PageWrapper,
   WriteWrapper,
   WriteHeader,
@@ -171,7 +171,7 @@ export default function Write() {
 
   return (
     <>
-    <GlobalStyle />
+    <GlobalStyles />
     <PageWrapper>
       <Alert
         color={alertColor}

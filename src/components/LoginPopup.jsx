@@ -3,7 +3,6 @@ import styled from "styled-components";
 import deleteIcon from "assets/images/deleteIcon.svg";
 import githubIcon from "assets/images/githubIcon.png";
 import googleIcon from "assets/images/googleIcon.png";
-import config from "config";
 import GoogleLogin from "react-google-login";
 
 const PopupWrapper = styled.div`
@@ -151,7 +150,7 @@ const MemberLink = styled.a`
 export default function LoginPopup({ isOpen, setIsLoginPopup }) {
   const [isLogin, setIsLogin] = useState(true);
   const GithubRoute = () => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${config.GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000`;
+    //window.location.href = `https://github.com/login/oauth/authorize?client_id=${config.GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000`;
   };
 
   const responseGoogle = (response) => {
@@ -205,7 +204,7 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
                         />
                       </IconButton>
                         <GoogleLogin
-                          clientId={config.GOOGLE_CLIENT_ID}
+                          //clientId={config.GOOGLE_CLIENT_ID}
                           render={(renderProps) => (
                             <IconButton
                               onClick={renderProps.onClick}

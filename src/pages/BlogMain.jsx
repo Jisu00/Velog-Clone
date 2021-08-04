@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Header from "components/Header";
+import GlobalStyles from "styles/GlobalStyles"
+
 import githubIcon from "assets/images/githubIcon2.svg";
 import twitterIcon from "assets/images/twitterIcon.svg";
 import facebookIcon from "assets/images/facebookIcon.svg";
@@ -9,7 +11,6 @@ import searchIcon from "assets/images/searchIcon.svg";
 import Post from "components/Post";
 import Series from "components/Series";
 import {
-  GlobalStyle,
   PageWrapper,
   FlexWrapper,
   HeaderWrapper,
@@ -18,16 +19,12 @@ import {
   UserName,
   Intro,
   SocialInfoWrapper,
+  IconImg,
   GithubIcon,
-  GithubImg,
   TwitterIcon,
-  TwitterImg,
   FacebookIcon,
-  FacebookImg,
   HomepageIcon,
-  HomepageImg,
   MailIcon,
-  MailImg,
   DividingLine,
   MainWrapper,
   MenuWrapper,
@@ -61,7 +58,7 @@ import {
 } from "styles/BlogMain"
 
 export default function BlogMain() {
-  const [menu, setMenu] = useState("post");
+  const [selectedMenu, setSelectedMenu] = useState("post");
   const [text, setText] = useState('');
   const [posts, setPosts] = useState([ // 임시로 초기화
     { 
@@ -77,6 +74,12 @@ export default function BlogMain() {
   ])
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultText, setSearchResultText] = useState('');
+  const [github, setGithub] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [mail, setMail] = useState("");
+  const [homepage, setHomepage] = useState("");
+
   const [isWriteMode, setIsWriteMode] = useState(false);
   const [isSaveMode, setIsSaveMode] = useState(true);
   const [isSearchTyped, setIsSearchTyped] = useState(false);
@@ -94,6 +97,17 @@ export default function BlogMain() {
       setIsWriteMode(false);
       setIsSaveMode(true);
     }
+
+    if (window.localStorage.github)
+      setGithub(window.localStorage.github);
+    if (window.localStorage.twitter)
+      setTwitter(window.localStorage.twitter);
+    if (window.localStorage.facebook)
+      setFacebook(window.localStorage.facebook);
+    if (window.localStorage.homepage)
+      setHomepage(window.localStorage.homepage);
+    if (window.localStorage.mail)
+      setMail(window.localStorage.mail);
   }, []);
 
   const toggleWriteMode = () => {
@@ -143,14 +157,14 @@ export default function BlogMain() {
 
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyles/>
       <PageWrapper>
         <HeaderWrapper><Header header_mode="blog"></Header></HeaderWrapper>
         <FlexWrapper
-          menu={menu}
+          menu={selectedMenu}
         >
           <TagListWrapper
-            menu={menu}
+            menu={selectedMenu}
           >
             <TagListText>태그 목록</TagListText>
             <TagList><TagLink href="#" style={{ color: "#20c997", fontWeight: 'bold'}}>전체 보기</TagLink> (2)</TagList>
@@ -160,54 +174,69 @@ export default function BlogMain() {
           <ProfileWrapper>
             <ProfileIcon
               src="https://media.vlpt.us/images/jisu00/profile/cf2284a3-2e41-4371-bcad-143b43975e9c/social.png?w=120"
-              onClick={()=>{setMenu("post")}}
+              onClick={()=>{setSelectedMenu("post")}}
               alt="profile icon"
             />
             <UserName>UserName</UserName>
             <Intro>Intro</Intro>
             <SocialInfoWrapper>
-              <a 
-                href="https://www.github.com/"
+              { github && 
+              <GithubIcon>
+                <a 
+                  href={"https://www.github.com/" + github}
+                  target="_blank"
+                >
+                  <IconImg src={githubIcon}/>
+                </a>
+              </GithubIcon> }
+              { twitter && 
+              <TwitterIcon>
+                <a 
+                  href={"https://www.twitter.com/" + twitter}
+                  target="_blank"
+                >
+                  <IconImg src={twitterIcon}/>
+                </a>
+              </TwitterIcon> }
+              { facebook &&
+              <FacebookIcon>
+                <a
+                  href={"https://facebook.com" + facebook}
+                  target="_blank"
+                >
+                  <IconImg src={facebookIcon}/>
+                </a>
+              </FacebookIcon> }
+              { homepage && 
+              <HomepageIcon>
+                <a 
+                href={homepage}
                 target="_blank"
-              >
-                <GithubIcon><GithubImg src={githubIcon}></GithubImg></GithubIcon>
-              </a>
-              <a 
-                href="https://www.twitter.com/"
+                >
+                  <IconImg src={homepageIcon}/>
+                </a>
+              </HomepageIcon> }
+              { mail && 
+              <MailIcon>
+                <a 
+                href={mail}
                 target="_blank"
-              >
-              <TwitterIcon><TwitterImg src={twitterIcon}></TwitterImg></TwitterIcon>
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-              >
-              <FacebookIcon><FacebookImg src={facebookIcon}></FacebookImg></FacebookIcon>
-              </a>
-              <a 
-                href="/"
-                target="_blank"
-              >
-              <HomepageIcon><HomepageImg src={homepageIcon}></HomepageImg></HomepageIcon>
-              </a>
-              <a 
-                href="/"
-                target="_blank"
-              >
-              <MailIcon><MailImg src={mailIcon}></MailImg></MailIcon>
-              </a>
+                >
+                  <IconImg src={mailIcon}/>
+                </a>
+              </MailIcon> }
             </SocialInfoWrapper>
           </ProfileWrapper>
           <DividingLine></DividingLine>
           <MainWrapper
-            menu={menu}
+            menu={selectedMenu}
           >
             <MenuWrapper>
-              <PostMenu menu={menu} onClick={()=>{setMenu("post")}}>글</PostMenu>
-              <SeriesMenu menu={menu} onClick={()=>{setMenu("series")}}>시리즈</SeriesMenu>
-              <AboutMenu menu={menu} onClick={()=>{setMenu("about")}}>소개</AboutMenu>
+              <PostMenu menu={selectedMenu} onClick={()=>{setSelectedMenu("post")}}>글</PostMenu>
+              <SeriesMenu menu={selectedMenu} onClick={()=>{setSelectedMenu("series")}}>시리즈</SeriesMenu>
+              <AboutMenu menu={selectedMenu} onClick={()=>{setSelectedMenu("about")}}>소개</AboutMenu>
               <MenuUnderline
-                menu={menu}
+                menu={selectedMenu}
               ></MenuUnderline>
             </MenuWrapper>
             <PostWrapper>

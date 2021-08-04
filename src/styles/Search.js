@@ -1,4 +1,3 @@
-import { createGlobalStyle } from "styled-components";
 import styled, { keyframes } from "styled-components";
 
 //// animation
@@ -11,16 +10,6 @@ export const fadeIn = keyframes`
 export const fadeOut = keyframes`
   from { opacity: 1; }
   to { opacity: 0.5; }
-`;
-
-export const GlobalStyle = createGlobalStyle`
-  body, html {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-  }
 `;
 
 ///

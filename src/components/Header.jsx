@@ -37,10 +37,12 @@ export default function Header({ header_mode }) {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [title, setTitle] = useState("");
   const [mode, setMode] = useState("main");
 
   useEffect(()=>{
     setMode(header_mode);
+    setTitle(window.localStorage.blog_title);
   }, []);
 
   const loginPopup = () => {
@@ -82,7 +84,7 @@ export default function Header({ header_mode }) {
           </LogoIconLink>
           <LogoTitleLink to={mode === "main" ? "/" : "/blog-main"}>
             <LogoTitle>
-              {mode === "main" ? "velog" : "NAME.log"}
+              {mode === "main" ? "velog" : title}
             </LogoTitle>
           </LogoTitleLink>
         </div>

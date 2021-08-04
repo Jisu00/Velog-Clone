@@ -8,8 +8,13 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Sunflower', sans-serif;
     }
 
-    body {
+    body, html {
+        padding: 0;
         margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        background: white;
     }
 `
 

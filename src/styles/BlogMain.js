@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from "styled-components";
-import { createGlobalStyle } from "styled-components";
 
 //// animation
 
@@ -11,19 +10,6 @@ export const fadeIn = keyframes`
 export const fadeOut = keyframes`
   from { opacity: 1; }
   to { opacity: 0.4; }
-`;
-
-////
-
-export const GlobalStyle = createGlobalStyle`
-  body, html {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    background: white;
-  }
 `;
 
 ////
@@ -126,7 +112,7 @@ const SocialBtn = styled.button`
   background: none;
 `;
 
-const SocialImg = styled.img`
+export const IconImg = styled.img`
   filter: invert(77%) sepia(8%) saturate(279%) hue-rotate(169deg) brightness(92%) contrast(95%);
 
   &:hover {
@@ -135,15 +121,10 @@ const SocialImg = styled.img`
 `;
 
 export const GithubIcon = styled(SocialBtn)``;
-export const GithubImg = styled(SocialImg)``;
 export const TwitterIcon = styled(SocialBtn)``;
-export const TwitterImg = styled(SocialImg)``;
 export const FacebookIcon = styled(SocialBtn)``;
-export const FacebookImg = styled(SocialImg)``;
 export const HomepageIcon = styled(SocialBtn)``;
-export const HomepageImg = styled(SocialImg)``;
 export const MailIcon = styled(SocialBtn)``;
-export const MailImg = styled(SocialImg)``;
 
 export const DividingLine = styled.div`
   @media (min-width: 769px) {
