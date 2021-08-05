@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
@@ -10,6 +10,16 @@ export const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
     background: #f8f9fa;
   }
+`;
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const fadeOut = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
 `;
 
 ///
@@ -69,7 +79,15 @@ export const TrendingImg = styled(IconImg)``;
 export const RecentMenu = styled(Menu)``;
 export const RecentImg = styled(IconImg)``;
 
-export const PeriodMenu = styled.div`
+
+/// PERIOD MENU
+
+
+export const PeriodMenuWrapper = styled.div`
+  position: relative;
+`;
+
+export const PeriodSelectBox = styled.div`
   display: flex;
   background: white;
   width: 80px;
@@ -86,12 +104,6 @@ export const PeriodMenu = styled.div`
   }
 `;
 
-export const DropDownMenuImg = styled.img`
-  transform: scale(1.5);
-  margin-left: 6px;
-  filter: invert(20%) sepia(11%) saturate(562%) hue-rotate(169deg) brightness(94%) contrast(91%);
-`;
-
 export const SortMenuWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -105,7 +117,7 @@ export const SortMenuWrapper = styled.div`
         css`
           ${RecentImg} { filter: invert(60%) sepia(17%) saturate(188%) hue-rotate(169deg) brightness(91%) contrast(85%) };
           ${RecentMenu} { color: #868e96; font-weight: normal };
-          ${PeriodMenu} { display: flex; }
+          ${PeriodMenuWrapper} { display: flex; }
         `
       )
     }
@@ -114,14 +126,81 @@ export const SortMenuWrapper = styled.div`
         css`
           ${TrendingImg} { filter: invert(60%) sepia(17%) saturate(188%) hue-rotate(169deg) brightness(91%) contrast(85%) };
           ${TrendingMenu} { color: #868e96; font-weight: normal };
-          ${PeriodMenu} { display: none; }
+          ${PeriodMenuWrapper} { display: none; }
         `
       )
     }
   }}
 `;
 
+export const DropDownMenuImg = styled.img`
+  transform: scale(1.5);
+  margin-left: auto;
+  filter: invert(20%) sepia(11%) saturate(562%) hue-rotate(169deg) brightness(94%) contrast(91%);
+`;
+
+const PeriodMenu = styled.div`
+  width: 190px;
+  height: 44px;
+  cursor: pointer;
+  background: white;
+  line-height: 44px;
+  padding: 0px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 1px solid #f1f3f5;
+
+  &:hover {
+    background: #f8f9fa;
+  }
+`;
+
+export const TodayMenu = styled(PeriodMenu)``;
+export const ThisWeekMenu = styled(PeriodMenu)``;
+export const ThisMonthMenu = styled(PeriodMenu)``;
+export const ThisYearMenu = styled(PeriodMenu)``;
+
+const DropDownMenu = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 45px;
+  width: 190px;
+  padding: 0px;
+  z-index: 1;
+  box-shadow: 0px 0px 7px 0px lightgray;
+  background: white;
+  
+  
+`;
+
+export const PeriodDropDownMenu = styled(DropDownMenu)`
+  ${props => {
+    const selectedPeriod = props.selectedPeriod;
+
+    if (selectedPeriod === "오늘")
+      return ( css`${TodayMenu} { color: #12b886; }` )
+    else if (selectedPeriod === "이번 주")
+      return ( css`${ThisWeekMenu} { color: #12b886; }` )
+    else if (selectedPeriod === "이번 달")
+      return ( css`${ThisMonthMenu} { color: #12b886; }` )
+    else if (selectedPeriod === "올해")
+      return (css`${ThisYearMenu} { color: #12b886; }`)
+  }};
+`;
+
+
+////
+
 export const MenuUnderline = styled.div`
+  @media (min-width: 945px) {
+    width: 112px;
+    left: ${props => {
+      if (props.menu === "recent") return "112px";
+      else return "0px";
+    }};
+  }
+  
+
   width: 84px;
   background: #343a40;
   position: absolute;
@@ -129,20 +208,37 @@ export const MenuUnderline = styled.div`
   top: 40px;
 
   left: ${props => {
-    const selectedMenu = props.menu;
-
-    if (selectedMenu === "recent") return "84px";
+    if (props.menu === "recent") return "84px";
     else return "0px";
   }};
 
   transition: left 0.3s;
 `;
 
-export const EtcMenu = styled.img`
+/// ETC MENU
+
+export const EtcMenuWrapper = styled.div`
+  margin-left: auto;
+`;
+
+export const EtcMenuIcon = styled.img`
   filter: invert(60%) sepia(17%) saturate(188%) hue-rotate(169deg) brightness(91%) contrast(85%);
   width: 25px;
-  margin-left: auto;
   cursor: pointer;
+`;
+
+export const EtcDropDownMenu = styled(DropDownMenu)``;
+
+export const EtcMenu = styled.div`
+  width: 190px;
+  height: 44px;
+  cursor: pointer;
+  background: white;
+  line-height: 44px;
+  padding: 0px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 1px solid #f1f3f5;
 `;
 
 

@@ -15,15 +15,33 @@ import {
   RecentMenu,
   RecentImg,
   MenuUnderline,
-  PeriodMenu,
+  PeriodMenuWrapper,
+  PeriodSelectBox,
+  PeriodDropDownMenu,
+  TodayMenu,
+  ThisWeekMenu,
+  ThisMonthMenu,
+  ThisYearMenu,
   DropDownMenuImg,
-  EtcMenu,
+  EtcMenuWrapper,
+  EtcMenuIcon,
+  EtcDropDownMenu,
+  EtcMenu
 } from "styles/Home";
-import { DropDownMenuIcon } from 'styles/Header';
 
 export default function Home() {
-  const [selectedMenu, setSelectedMenu] = useState("recent");
-  const [selectedPeriod, setSelectedPeriod] = useState("this week");
+  const [selectedMenu, setSelectedMenu] = useState("trending");
+  const [selectedPeriod, setSelectedPeriod] = useState("이번 주");
+  const [isPeriodMenuOpen, setIsPeriodMenuOpen] = useState(false);
+  const [isEtcMenuOpen, setIsEtcMenuOpen] = useState(false);
+
+  const togglePeriodMenu = () => {
+    isPeriodMenuOpen ? setIsPeriodMenuOpen(false) : setIsPeriodMenuOpen(true)
+  }
+
+  const toggleEtcMenu = () => {
+    isEtcMenuOpen ? setIsEtcMenuOpen(false) : setIsEtcMenuOpen(true)
+  }
 
   return (
     <>
@@ -40,15 +58,59 @@ export default function Home() {
               <TrendingImg src={trendingIcon}/>트렌딩
             </TrendingMenu>
             <RecentMenu
-              onClick={()=>{setSelectedMenu("recent")}}
+              onClick={()=>{setSelectedMenu("recent"); setIsPeriodMenuOpen(false)}}
             >
               <RecentImg src={recentIcon}/>최신
             </RecentMenu>
             <MenuUnderline menu={selectedMenu}></MenuUnderline>
-            <PeriodMenu>
-              이번 주 <DropDownMenuImg src={dropDownMenuIcon}/>
-            </PeriodMenu>
-            <EtcMenu src={etcMenuIcon}/>
+            <PeriodMenuWrapper>
+              <PeriodSelectBox
+                onClick={togglePeriodMenu}
+              >
+                {selectedPeriod}<DropDownMenuImg src={dropDownMenuIcon}/>
+              </PeriodSelectBox>
+              { isPeriodMenuOpen && 
+              <PeriodDropDownMenu
+                selectedPeriod={selectedPeriod}
+              >
+                <TodayMenu
+                  onClick={()=>{setSelectedPeriod("오늘"); togglePeriodMenu()}}
+                >
+                  오늘
+                </TodayMenu>
+                <ThisWeekMenu
+                  onClick={()=>{setSelectedPeriod("이번 주"); togglePeriodMenu()}}
+                >
+                  이번 주
+                </ThisWeekMenu>
+                <ThisMonthMenu
+                  onClick={()=>{setSelectedPeriod("이번 달"); togglePeriodMenu()}}
+                >
+                  이번 달
+                </ThisMonthMenu>
+                <ThisYearMenu
+                  onClick={()=>{setSelectedPeriod("올해"); togglePeriodMenu()}}
+                >
+                  올해
+                </ThisYearMenu>
+              </PeriodDropDownMenu>
+              }
+            </PeriodMenuWrapper>
+            <EtcMenuWrapper>
+              <EtcMenuIcon 
+                onClick={toggleEtcMenu}
+                src={etcMenuIcon}
+              />
+            </EtcMenuWrapper>
+            { isEtcMenuOpen && 
+            <EtcDropDownMenu>
+              <EtcMenu>공지사항</EtcMenu>
+              <EtcMenu>태그 목록</EtcMenu>
+              <EtcMenu>서비스 정책</EtcMenu>
+              <EtcMenu>Slack</EtcMenu>
+              <EtcMenu>문의</EtcMenu>
+            </EtcDropDownMenu> 
+            }
           </SortMenuWrapper>
         </FlexWrapper>
       </PageWrapper>
