@@ -37,12 +37,13 @@ export default function Header({ header_mode }) {
   const [isLoginPopup, setIsLoginPopup] = useState(false);
   const [isMenuPopup, setIsMenuPopup] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("userName.log");
   const [mode, setMode] = useState("main");
 
   useEffect(()=>{
     setMode(header_mode);
-    setTitle(window.localStorage.blog_title);
+    if (window.localStorage.blog_title)
+      setTitle(window.localStorage.blog_title);
   }, []);
 
   const loginPopup = () => {

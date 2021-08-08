@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Header from "components/Header";
+import HomePost from "components/HomePost";
 
 import trendingIcon from "assets/images/trendingIcon.svg";
 import recentIcon from "assets/images/recentIcon.svg";
@@ -8,8 +9,8 @@ import etcMenuIcon from "assets/images/etcMenuIcon.svg";
 import {
   GlobalStyles,
   PageWrapper,
-  FlexWrapper,
-  SortMenuWrapper,
+  HeaderWrapper,
+  MenuWrapper,
   TrendingMenu,
   TrendingImg,
   RecentMenu,
@@ -26,7 +27,8 @@ import {
   EtcMenuWrapper,
   EtcMenuIcon,
   EtcDropDownMenu,
-  EtcMenu
+  EtcMenu,
+  PostWrapper
 } from "styles/Home";
 
 export default function Home() {
@@ -47,9 +49,9 @@ export default function Home() {
     <>
       <GlobalStyles/>
       <PageWrapper>
-        <Header header_mode="main"></Header>
-        <FlexWrapper>
-          <SortMenuWrapper
+        <HeaderWrapper>
+          <Header header_mode="main"></Header>
+          <MenuWrapper
             menu={selectedMenu}
           >
             <TrendingMenu
@@ -111,8 +113,14 @@ export default function Home() {
               <EtcMenu>문의</EtcMenu>
             </EtcDropDownMenu> 
             }
-          </SortMenuWrapper>
-        </FlexWrapper>
+          </MenuWrapper>
+        </HeaderWrapper>
+        <PostWrapper>
+          <HomePost></HomePost>
+          <HomePost></HomePost>
+          <HomePost></HomePost>
+          <HomePost></HomePost>
+        </PostWrapper>
       </PageWrapper>
     </>
   )

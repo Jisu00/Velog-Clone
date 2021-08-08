@@ -8,11 +8,12 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background: #f8f9fa;
+    background: #f8f9fa!important;
+    text-align: center;
   }
 `;
 
-const fadeIn = keyframes`
+/*const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }
 `;
@@ -20,18 +21,11 @@ const fadeIn = keyframes`
 const fadeOut = keyframes`
   from { opacity: 1; }
   to { opacity: 0; }
-`;
+`;*/
 
 ///
 
 export const PageWrapper = styled.div`
-  @media (max-width: 1024px) {
-    padding: 0px 20px;
-  }
-  @media (min-width: 1025px) {
-    padding: 0px 70px;
-  }
-
   width: 100%;
   height: 100%;
   color: #343a40;
@@ -39,16 +33,17 @@ export const PageWrapper = styled.div`
   background: #f8f9fa;
 `;
 
-export const FlexWrapper = styled.div`
-  @media (min-width: 769px) {
-    align-items: center;
+export const HeaderWrapper = styled.div`
+  @media (min-width: 1025px) {
+    width: 1064px;
+  }
+  @media (min-width: 1440px) {
+    width: 1424px;
   }
 
-  display: flex;
-  height: 100%;
-  position: relative;
-  flex-direction: column;
-  margin-top: 30px;
+  padding: 0px 20px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 //// SORT MENU
@@ -88,6 +83,12 @@ export const PeriodMenuWrapper = styled.div`
 `;
 
 export const PeriodSelectBox = styled.div`
+  @media (min-width: 945px) {
+    font-size: 14px;
+    width: 100px;
+    height: 32px;
+  }
+
   display: flex;
   background: white;
   width: 80px;
@@ -98,16 +99,19 @@ export const PeriodSelectBox = styled.div`
   padding: 6.5px;
   box-shadow: 0px 0px 2px 0px lightgray;
   cursor: pointer;
+  color: #495057;
 
   &:hover{
     opacity: 0.8;
   }
 `;
 
-export const SortMenuWrapper = styled.div`
+export const MenuWrapper = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
+  position: relative;
+  margin-top: 30px;
 
   ${props => {
     const selectedMenu = props.menu;
@@ -169,8 +173,6 @@ const DropDownMenu = styled.div`
   z-index: 1;
   box-shadow: 0px 0px 7px 0px lightgray;
   background: white;
-  
-  
 `;
 
 export const PeriodDropDownMenu = styled(DropDownMenu)`
@@ -204,7 +206,7 @@ export const MenuUnderline = styled.div`
   width: 84px;
   background: #343a40;
   position: absolute;
-  height: 2px;
+  height: 1.5px;
   top: 40px;
 
   left: ${props => {
@@ -242,5 +244,9 @@ export const EtcMenu = styled.div`
 `;
 
 
-////
+//// POST
+
+export const PostWrapper = styled.div`
+  margin-top: 20px;
+`;
 
