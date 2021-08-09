@@ -247,6 +247,17 @@ export const EtcMenu = styled.div`
 //// POST
 
 export const PostWrapper = styled.div`
+  @media (min-width: 767px) and (max-width: 1056px) {
+    width: 100%;
+  }
+  @media (min-width: 1057px) and (max-width: 1339px) {
+    width: 1056px;
+  }
+  @media (min-width: 1440px) {
+    width: 1408px;
+  }
+  margin: 0px auto;
   margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
 `;
-
