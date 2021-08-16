@@ -395,8 +395,8 @@ export default function Setting() {
                     onClick={toggleCommentAlert}
                     isAlert={isCommentAlert}
                   >
-                    <CommentToggleFill></CommentToggleFill>
-                    <CommentToggleSwitch></CommentToggleSwitch>
+                    <CommentToggleFill/>
+                    <CommentToggleSwitch/>
                   </CommentAlertToggleWrapper>
                 </CommentAlertWrapper>
                 <UpdateNewsWrapper>
@@ -405,8 +405,8 @@ export default function Setting() {
                     onClick={toggleUpdateAlert}
                     isAlert={isUpdateAlert}
                   >
-                    <UpdateToggleFill></UpdateToggleFill>
-                    <UpdateToggleSwitch></UpdateToggleSwitch>
+                    <UpdateToggleFill/>
+                    <UpdateToggleSwitch/>
                   </UpdateNewsToggleWrapper>
                 </UpdateNewsWrapper>
               </EmailReceiveWrapper>

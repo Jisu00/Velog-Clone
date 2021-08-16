@@ -38,7 +38,7 @@ export const HeaderWrapper = styled.div`
     width: 1064px;
   }
   @media (min-width: 1440px) {
-    width: 1424px;
+    width: 1436px;
   }
 
   padding: 0px 20px;
@@ -206,7 +206,7 @@ export const MenuUnderline = styled.div`
   width: 84px;
   background: #343a40;
   position: absolute;
-  height: 1.5px;
+  height: 2px;
   top: 40px;
 
   left: ${props => {

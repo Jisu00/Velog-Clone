@@ -9,9 +9,11 @@ const PostWrapper = styled.div`
   @media (min-width: 767px) and (max-width: 1056px) {
     min-width: 320px;
     width: 45%;
+    &:hover { bottom: 10px; }
   }
   @media (min-width: 1057px) {
     height: 326px;
+    &:hover { bottom: 10px; }
   }
   display: inline-block;
   width: 320px;
@@ -19,7 +21,10 @@ const PostWrapper = styled.div`
   background: white;
   border-radius: 5px;
   color: #495057;
-  position: relative;
+  position: relative;  
+  bottom: 0;
+  box-shadow: 0px 0px 10px 0px lightgray;
+  transition: bottom 0.5s;
 `;
 
 const ThumbNail = styled.img`
