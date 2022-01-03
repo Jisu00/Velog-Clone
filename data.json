@@ -1,0 +1,22 @@
+{
+  "register": [
+    {
+      "fullName": "김지수",
+      "email": "wltn09231@naver.com",
+      "id": "Jisu00",
+      "introduction": "안녕"
+    },
+    {
+      "fullName": "응애",
+      "email": "wltn09231@gmail.com",
+      "id": "Jisu09231",
+      "introduction": "안녕"
+    },
+    {
+      "fullName": "김지수",
+      "email": "jisu@naver.co",
+      "id": "jisu",
+      "introduction": "ㅇㅇ"
+    }
+  ]
+}

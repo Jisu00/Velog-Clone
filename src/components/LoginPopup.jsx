@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import deleteIcon from "assets/images/deleteIcon.svg";
 import githubIcon from "assets/images/githubIcon.png";
 import googleIcon from "assets/images/googleIcon.png";
 import GoogleLogin from "react-google-login";
+import Alert from "./Alert";
 
 const PopupWrapper = styled.div`
   display: flex;
@@ -110,6 +113,9 @@ const LoginButton = styled.button`
   height: 53px;
   width: 96px;
   cursor: pointer;
+  &:hover{
+    opacity: 0.8;
+  }
 `;
 
 const SocialArea = styled.div`
@@ -149,6 +155,9 @@ const MemberLink = styled.a`
 
 export default function LoginPopup({ isOpen, setIsLoginPopup }) {
   const [isLogin, setIsLogin] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
+
   const GithubRoute = () => {
     //window.location.href = `https://github.com/login/oauth/authorize?client_id=${config.GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000`;
   };
@@ -160,6 +169,29 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
   const toggleState = () => {
     setIsLogin(!isLogin);
   };
+
+  const checkEmail = (e) => {
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    const checkResult = regExp.test(e.target.value);
+
+    if (checkResult) {
+      axios
+      .get(`http://localhost:4000/register?email=${e.target.value}`)
+      .then(res => {
+        if (!res.data.length) {
+          setIsEmailValid(checkResult);
+        } else {
+          alert("중복된 이메일");
+        }
+      })
+    }
+
+
+  }
+
+  const alertValid = () => {
+    isEmailValid ? setIsAlert(false) : setIsAlert(true);
+  }
 
   return (
     <>
@@ -184,8 +216,16 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
                     <LoginTypeText>
                       이메일로 {isLogin ? "로그인" : "회원가입"}
                     </LoginTypeText>
-                    <EmailInput></EmailInput>
-                    <LoginButton>{isLogin ? "로그인" : "회원가입"}</LoginButton>
+                    <EmailInput
+                      onChange={checkEmail}
+                    />
+                    <Link to={!isLogin && isEmailValid ? "/register" : ""}>
+                      <LoginButton
+                        onClick={alertValid}
+                      >
+                        {isLogin? "로그인" : "회원가입"}
+                      </LoginButton>
+                    </Link>
                   </EmailArea>
                   <SocialArea>
                     <LoginTypeText>
@@ -244,6 +284,13 @@ export default function LoginPopup({ isOpen, setIsLoginPopup }) {
               </LoginAreaWrapper>
             </PopupRightWrapper>
           </Popup>
+          <Alert 
+            color="red"
+            text="잘못된 이메일 형식입니다."
+            isShow={isAlert}
+            setIsAlert={setIsAlert}
+            style={{textAlign:'left'}}
+          />
         </PopupWrapper>
       )}
     </>

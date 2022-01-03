@@ -1,30 +1,33 @@
 import React from "react";
-import styled, {keyframes} from "styled-components";
+import axios from 'axios';
+import styled, { keyframes } from "styled-components";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const TotalWrapper = styled.div`
   width: 768px;
   height: 780px;
-  margin: 100px auto 0;
+  margin: 72px 15px;
 `;
 
 const TextWrapper = styled.div``;
 
 const WelcomeText = styled.h1`
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 700;
   line-height: 1.5;
 `;
 
 const InputDescription = styled.span`
-  font-size: 1.5rem;
+  font-size: 1rem;
 `;
 
 const FormDiv = styled.div`
   display: flex;
   margin: 48px 0;
+  position: relative;
 `;
+
 const LabelText = styled.label`
   font-size: 1.125rem;
   margin-bottom: 16px;
@@ -37,11 +40,12 @@ const InputItem = styled.div`
 `;
 
 const InputText = styled.input`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border: none;
   padding-bottom: 8px;
   border-bottom: 1px solid #000;
   background: transparent;
+  outline: none;
 `;
 
 const Btn = styled.button`
@@ -52,6 +56,7 @@ const Btn = styled.button`
 	font-weight: bold;
 	border-radius: 1.5rem;
 	cursor: pointer;
+  margin-top: 4rem;
 `;
 
 const fadeIn = keyframes`
@@ -79,12 +84,16 @@ const LoginBtn = styled(Btn)`
 `;
 
 const ErrorMessage = styled.div`
+  position: absolute;
+  bottom: 5rem;
   font-size: 1.125rem;
   color: rgb(255, 107, 107);
   font-weight: bold;
   margin-bottom: 1rem;
 `;
-export default function LoginInfo() {
+
+
+export default function Register() {
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -110,7 +119,16 @@ export default function LoginInfo() {
       introduction: Yup.string().required("한 줄 소개를 입력해주세요."),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+
+      axios
+      .post("http://localhost:4000/register", values)
+      .then(res => {
+        alert("등록 완료!");
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     },
   });
 
@@ -149,10 +167,10 @@ export default function LoginInfo() {
             </InputItem>
 
             <InputItem>
-              <LabelText htmlFor="velogId">아이디</LabelText>
+              <LabelText htmlFor="id">아이디</LabelText>
               <InputText
-                id="velogId"
-                name="velogId"
+                id="id"
+                name="id"
                 type="text"
                 placeholder="아이디를 입력하세요"
                 onChange={formik.handleChange}
@@ -170,12 +188,14 @@ export default function LoginInfo() {
                 placeholder="당신을 한 줄로 소개해보세요"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              value={formik.values.id}
+              value={formik.values.introduction}
               size='25'
               />
             </InputItem>
-
-            {formik.touched.fullName && formik.errors.fullName ? (
+            <CancelBtn>취소</CancelBtn>
+            <LoginBtn type="submit">다음</LoginBtn>
+          </form>
+          {formik.touched.fullName && formik.errors.fullName ? (
               <ErrorMessage>{formik.errors.fullName}</ErrorMessage>
             ) : formik.touched.email && formik.errors.email ? (
               <ErrorMessage>{formik.errors.email}</ErrorMessage>
@@ -184,9 +204,6 @@ export default function LoginInfo() {
             ) : formik.touched.introduction && formik.errors.introduction ? (
               <ErrorMessage>{formik.errors.introduction}</ErrorMessage>
             ) : null}
-            <CancelBtn type="submit">취소</CancelBtn>
-            <LoginBtn type="submit">다음</LoginBtn>
-          </form>
         </FormDiv>
       </TotalWrapper>
   );
